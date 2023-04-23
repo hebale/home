@@ -1,0 +1,52 @@
+
+@font-face {
+	font-family: 'SUIT Variable';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: local('SUIT Variable'), url('../fonts/SUIT-Variable.woff2') format('woff2-variations');
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  font-family: 'SUIT Variable';
+  font-size: 10px;
+  color: #303030;
+  background-color: #f5f5f5;
+}
+body {
+  margin: 0;
+  padding: 0;
+  user-select: none;  
+}
+main {
+  display: block;
+}
+ul, ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+input, button, select, label {
+  font: inherit;
+  cursor: pointer;
+}
+select {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVQ4T93TMQrCUAzG8V9x8QziiYSuXdzFC7h4AcELOPQAdXYovZCHEATlgQV5GFTe1ozJlz/kS1IpjKqw3wQBVyy++JI0y1GTe7DCBbMAckeNIQKk/BanALBB+16LtnDELoMcsM/BESDlz2heDR3WePwKSLo5eoxz3z6NNcFD+vu3ij14Aqz/DxGbKB7CAAAAAElFTkSuQmCC) no-repeat 95% 50%;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  &::-ms-expand {
+    display: none;
+  }
+}
+p {
+  margin: 0;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@import './import/layout.scss';
+@import './import/card.scss';

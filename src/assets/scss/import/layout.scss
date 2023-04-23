@@ -1,0 +1,15 @@
+#app {
+  padding: 36px 24px 80px;
+  > header {
+    text-align: center;
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 300;
+    }
+  }
+  > section {
+    margin-top: 22px;
+    text-align: center;
+  }
+}

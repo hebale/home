@@ -1,0 +1,38 @@
+import React, { useState, useEffect } from 'react';
+
+import './assets/scss/style';
+import apiFetch from './common/api';
+import Card from './component/Card';
+
+const App = () => {
+  const [cardData, setCardData] = useState();
+  
+  useEffect(() => {
+    (async () => {
+      const data = await apiFetch.get('/')
+      
+      if(data) setCardData(data);
+    })()
+  }, []);
+
+  return (
+    <React.Fragment>
+      <header>
+        <h1>
+          <a href="/">hebale.com</a>
+        </h1>
+      </header>
+      <section>
+        <ul className="card-wrap">
+          {cardData?.map(data => 
+            <Card {...data} key={data.path} />
+          )}
+        </ul>
+      </section>
+    </React.Fragment>
+  );
+};
+
+
+
+export default App;
