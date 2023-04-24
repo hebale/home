@@ -1,7 +1,7 @@
 .card-wrap {
   display: inline-block;
   margin: -18px 0 0 -18px;
-  max-width: 1236px;
+  max-width: 1194px;
   width: 100%;
   font-size: 0;
   text-align: left;
@@ -17,18 +17,19 @@
     transform-origin: 50% 50%;
     transition: box-shadow 0.35s, transform 0.35s;
     box-sizing: border-box;
+    text-align: center;
     &:hover {
       transform: translate(4px, -4px);
       box-shadow: -4px 4px 0 #333;
     }
     a.link {
       display: inline-block;
-      padding: 16px 18px;
+      padding: 14px 22px;
       width: 100%;
       box-sizing: border-box;
     }
     header {
-      padding-bottom: 12px;
+      padding-bottom: 6px;
       border-bottom: 1px solid #999;
       h2 {
         margin: 0;
@@ -36,25 +37,47 @@
         font-size: 1.8rem;
         font-weight: 600;
       }
-      span {
-        display: inline-block;
-        padding: 2px 0;
-        font-size: 1.2rem;
-        font-weight: 400;
+      .info {
+        span {
+          position: relative;
+          display: inline-block;
+          padding: 2px 0;
+          margin-top: 6px;
+          font-size: 1.1rem;
+          font-weight: 400;
+          text-transform: uppercase;
+          
+          & + span {
+            padding-left: 8px;
+            margin-left: 8px;
+
+            &:before {
+              content: '';
+              display: inline-block;
+              position: absolute;
+              top: 50%;
+              left: 0;
+              width: 1px;
+              height: 8px;
+              transform: translateY(-50%);
+              background: #333;
+            }
+          }
+        }
       }
     }
     section {
-      padding-top: 12px;
+      padding-top: 14px;
       p {
         font-size: 1.4rem;
         font-weight: 300;
       }
       .tag-group {
-        margin-top: 12px;
+        margin-top: 16px;
         font-size: 0;
         span {
           display: inline-block;
-          padding: 2px 6px;
+          padding: 2px 8px;
           font-size: 1.1rem;
           border: 1px solid #333;
           & + span {
@@ -105,4 +128,9 @@
     content: 'comming soon';
     color: #333;
   }
+}
+
+
+.card.pingpong {
+  display: none;
 }

@@ -1,15 +1,28 @@
 #app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 36px 24px 80px;
+  overflow-y: auto;
   > header {
     text-align: center;
     h1 {
       margin: 0;
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: 300;
+    }
+    p {
+      margin-top: 8px;
+      font-size: 1.8rem;
     }
   }
   > section {
-    margin-top: 22px;
+    margin-top: 26px;
     text-align: center;
   }
 }

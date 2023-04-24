@@ -1,5 +1,10 @@
 import React from "react";
 
+
+const dateFormat = (value) => {
+  return String(value).replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3')
+}
+
 export default function Card({
   path,
   title,
@@ -9,19 +14,22 @@ export default function Card({
   create,
   skills,
 }){
+  
   return (
     <li className={`card ${path}`}>
       <a className="link" href={`/${path}/`}>
         <header>
-          <h2>{title}</h2>  
-          <span>{create}</span>
+          <h2>{title}</h2>
+          <div className="info">
+            <span>{device.join(' / ')}</span>
+            <span>{dateFormat(create)}</span>
+          </div>  
         </header>
         <section>
-          <span>{device.join(',')}</span>
           <p>{description}</p>
           <div className="tag-group">
             {skills.map(skill => (
-              <span key={skill}>{skill}</span>
+              <span className={skill.split(' ').at(0)} key={skill}>{skill}</span>
             ))}
           </div>
         </section>

@@ -19,8 +19,9 @@ const App = () => {
     <React.Fragment>
       <header>
         <h1>
-          <a href="/">hebale.com</a>
+          <a href="/">hebale web</a>
         </h1>
+        <p>경력은 실력으로, 실력은 노력으로</p>
       </header>
       <section>
         <ul className="card-wrap">
