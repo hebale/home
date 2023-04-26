@@ -7,6 +7,9 @@
   width: 100%;
   font-size: 0;
   text-align: left;
+  @include mobile {
+    grid-template-columns: repeat(auto-fit, minmax(270px, auto));
+  }
   .card {
     position: relative;
     display: inline-block;
