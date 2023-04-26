@@ -1,6 +1,8 @@
 .card-wrap {
-  display: inline-block;
-  margin: -18px 0 0 -18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, auto));
+  gap: 18px;
+  margin: 0 auto;
   max-width: 1194px;
   width: 100%;
   font-size: 0;
@@ -8,8 +10,6 @@
   .card {
     position: relative;
     display: inline-block;
-    margin: 18px 0 0 18px;
-    max-width: 380px;
     width: 100%;
     border: 1px solid #333;
     background: #fff;
