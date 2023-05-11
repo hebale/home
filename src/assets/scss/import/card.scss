@@ -103,9 +103,6 @@
   }
 }
 
-
-
-.gojiri:after,
 .pingpong:after {
   content: '';
   display: flex;
@@ -123,16 +120,11 @@
   transition: color 0.7s;
 }
 .card:hover {
-  &.gojiri:after {
-    content: 'is working';
-    color: #333;
-  }
   &.pingpong:after {
     content: 'comming soon';
     color: #333;
   }
 }
-
 
 .card.pingpong {
   display: none;
