@@ -17,7 +17,7 @@ export default function Card({
   
   return (
     <li className={`card ${path}`}>
-      <a className="link" href={`/${path}/`}>
+      <a className="link" href={`/${path}/`} target="_blank">
         <header>
           <h2>{title}</h2>
           <div className="info">
