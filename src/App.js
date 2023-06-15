@@ -11,7 +11,10 @@ const App = () => {
     (async () => {
       const data = await apiFetch.get('/')
 
-      if(data) setCardData(data);
+      if(data) {
+        console.log(data.sort((a,b) => b.create - a.create));
+        setCardData(data);
+      }
     })()
   }, []);
 
