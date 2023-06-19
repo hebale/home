@@ -1,38 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-import './assets/scss/style';
-import apiFetch from './common/api';
-import Card from './component/Card';
+import '@/assets/scss/style';
+import Header from '@/layout/Header';
+import Body from '@/layout/Body';
+
+import useOctokit from '@/common/octokit';
+
 
 const App = () => {
-  const [cardData, setCardData] = useState();
-
+  const { getRepositoryLists } = useOctokit();
+  
   useEffect(() => {
-    (async () => {
-      const data = await apiFetch.get('/')
-
-      if(data) {
-        console.log(data.sort((a,b) => b.create - a.create));
-        setCardData(data);
-      }
-    })()
+    getRepositoryLists();
   }, []);
 
   return (
     <React.Fragment>
-      <header>
-        <h1>
-          <a href="/">hebale web</a>
-        </h1>
-        <p>경력은 실력으로, 실력은 노력으로</p>
-      </header>
-      <section>
-        <ul className="card-wrap">
-          {cardData?.map(data => 
-            <Card {...data} key={data.path} />
-          )}
-        </ul>
-      </section>
+      <Header />
+      <Body />
     </React.Fragment>
   );
 };

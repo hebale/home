@@ -3,11 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = { 
-  entry: './src/main.js',
+  entry: './src/index.js',
   // devtool: 'eval',
   devtool: 'hidden-source-map',
   resolve: {
-    extensions: [ '.js', '.scss' ]
+    extensions: ['.js', '.ts', '.scss'],
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
   },
   output: {
     filename: './assets/js/script.min.js',
