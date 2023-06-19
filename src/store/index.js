@@ -9,7 +9,7 @@ const store = set => ({
 const reducer = (_, { type, payload }) => {
   switch (type) {
     case 'UPDATE_CARDS_DATA':
-      return { cardData: payload.sort((a, b) => new Date(b.pushed_at) > new Date(a.pushed_at)) }
+      return { cardData: payload.sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)) }
   }
 };
 
