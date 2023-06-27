@@ -16,17 +16,38 @@
   > header {
     text-align: center;
     h1 {
+      display: flex;
       margin: 0;
       font-size: 1.6rem;
       font-weight: 300;
+      align-items: center;
+      justify-content: center;
+      a {
+        display: inline-block;
+        font-size: 1.6rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      a.github {
+        margin-left: 10px;
+        width: 34px;
+        height: 34px;
+        background: url('../images/logo_github.svg') no-repeat center;
+        background-size: 24px;
+        opacity: 0.8;
+        text-indent: 100%;    
+        white-space: nowrap;    
+        overflow: hidden;
+      }
     }
     p {
-      margin-top: 8px;
-      font-size: 1.8rem;
+      margin-top: 12px;
+      font-size: 1.6rem;
+      font-weight: 300;
     }
   }
   > section {
-    margin-top: 26px;
-    text-align: center;
+    margin-top: 32px;
   }
 }

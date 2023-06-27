@@ -1,7 +1,12 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 
 createRoot(document.querySelector('#app'))
-  .render(<App />);
+  .render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );

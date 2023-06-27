@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = { 
   entry: './src/index.js',
   // devtool: 'eval',
-  devtool: 'hidden-source-map',
+  // devtool: 'hidden-source-map',
   resolve: {
     extensions: ['.js', '.ts', '.scss'],
     alias: {
@@ -50,6 +50,19 @@ module.exports = {
         ]
       },
       {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name(resourcePath) {
+                return resourcePath.split('/src')[1];
+              },
+            },
+          },
+        ],
+      },
+      {
         test: /\.jsx?/,
         loader: 'babel-loader',
         options: {
@@ -62,6 +75,7 @@ module.exports = {
     host: 'localhost',
     port: 3000,
     open: true,
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

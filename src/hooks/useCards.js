@@ -3,7 +3,6 @@ import http from '@/common/http';
 
 export default function useCards() {
   const { token, cardData, dispatch } = useStore();
-  
 
   const updateCardsData = () => {
     const data = http.get({
@@ -19,9 +18,6 @@ export default function useCards() {
 
     console.log(data);
   }
-
-
-
   return {
     updateCardsData
   }

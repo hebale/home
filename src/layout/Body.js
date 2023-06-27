@@ -1,20 +1,11 @@
 import React from 'react';
 
-import useStore from '@/store';
-
-import Card from '@/component/Card';
-
+import Routing from '@/router/route';
 
 const Body = () => {
-  const { cardData } = useStore();
-
   return (
     <section>
-      <ul className="card-wrap">
-        {cardData.map(data => 
-          <Card data={data} key={data.id} />
-        )}
-      </ul>
+      <Routing />
     </section>
   );
 }

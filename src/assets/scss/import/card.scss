@@ -1,110 +1,311 @@
 .card-wrap {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, auto));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 260px));
+  gap: 14px;
   margin: 0 auto;
   max-width: 1194px;
   width: 100%;
   font-size: 0;
-  text-align: left;
-  @include mobile {
-    grid-template-columns: repeat(auto-fit, minmax(270px, auto));
+  justify-items: center;
+  justify-content: center;
+  li {
+    position: relative;
+    &.selected {
+      z-index: 10;
+      .dim {
+        display: block;
+      }
+      .inner {
+        .back-face {
+          transition: none;
+        }
+      }
+    }
+    &:not(.selected) {
+      .inner {
+        &:hover {
+          .back-face{
+            transform: translate(4px, -4px) !important;
+            box-shadow: -4px 4px 0 #333;
+          }
+        }
+      }
+    }
   }
   .card {
+    z-index: 1;
     position: relative;
     display: inline-block;
     width: 100%;
+    height: 340px;
     box-shadow: 0px 0px 0 #333;
-    transform-origin: 50% 50%;
-    transition: box-shadow 0.35s, transform 0.35s;
-    perspective: 1000px;
-    text-align: center;
     box-sizing: border-box;
-    --rotate-x: 0deg;
-    --rotate-y: 0deg;
-    &:hover {
-      transform: translate(4px, -4px);
-      box-shadow: -4px 4px 0 #333;
-    }
+    transform-origin: 50% 50%;
+    perspective: 1300px;
+    transform-style: preserve-3d;
     .inner {
-      position: relative;
-      transform: rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
-      background: #fff;
-      a.link {
-        display: inline-block;
-        padding: 18px 22px;
-        width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      [class*='-face'] {
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+      .front-face {
+        display: inline-flex;
+        flex-direction: column;
+        padding: 18px 0 20px;
+        height: 100%;
+        width: 260px;
+        transition: transform 300ms ease, box-shadow 300ms ease;
         border: 1px solid #333;
+        border-radius: 10px;
         box-sizing: border-box;
-      }
-    }
-    header {
-      padding-bottom: 6px;
-      border-bottom: 1px solid #999;
-      h2 {
-        margin: 0;
-        line-height: 1;
-        font-size: 1.8rem;
-        font-weight: 600;
-      }
-      .info {
-        span {
+        background: #fff;
+        transform: rotateY(180deg);
+        header {
           position: relative;
-          display: inline-block;
-          padding: 2px 0;
-          margin-top: 6px;
-          font-size: 1.1rem;
-          font-weight: 400;
-          
-          & + span {
-            padding-left: 8px;
-            margin-left: 8px;
-
-            &:before {
+          margin: 0 14px;
+          height: 140px;
+          box-sizing: border-box;
+          overflow: hidden;
+          cursor: pointer;
+          // &:hover {
+          //   a.link {
+          //     &:before,
+          //     &:after {
+          //       bottom: 10px;
+          //     }
+          //   }
+          // }
+          a.link {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            // &:before,
+            // &:after {
+            //   display: inline-block;
+            //   position: absolute;
+            //   right: 8px;
+            //   bottom: -10px;
+            //   transition: bottom 340ms;
+            // }
+            // &:before {
+            //   content: 'Webpage';
+            //   padding: 2px 18px 2px 6px;
+            //   border-radius: 8px;
+            //   font-size: 1rem;
+            //   text-transform: uppercase;
+            //   transform: translate(4px, 4px) scale(0.8);
+            //   color: #fff;
+            //   background: #333;
+            // }
+            // &:after {
+            //   content: '';
+            //   right: 16px;
+            //   width: 4px;
+            //   height: 4px;
+            //   border: 1px solid #fff;
+            //   border-width: 0 1px 1px 0;
+            //   transform: translate(-2px, -2px) rotateZ(-45deg);
+            // }
+          }
+          img {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #666;
+            border-radius: 4px;
+            object-fit: contain;
+            box-sizing: border-box;
+          }
+        }
+        section {
+          padding: 8px 18px;
+          box-sizing: border-box;
+          h2 {
+            display: flex;
+            margin: 0;
+            padding-bottom: 8px;
+            line-height: 1;
+            font-size: 1.6rem;
+            font-weight: 600;
+            justify-content: space-between;
+            align-items: center;
+            a {
+              position: relative;
+              display: inline-block;
+              cursor: pointer;
+            }
+            a.link {
+              display: inline-flex;
+              margin-left: auto;
+              margin-right: -2px;
+              width: 34px;
+              height: 34px;
+              font-size: 1rem;
+              font-weight: 500;
+              color: #fff;
+              transform: scale(0.7);
+              align-items: center;
+              justify-content: center;
+              text-transform: uppercase;
+              &:before {
+                content: '';
+                z-index: -1;
+                display: inline-block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                background: #333;
+              }
+            }
+            a.github {
+              margin-right: -6px;
+              width: 34px;
+              height: 34px;
+              background: url('../images/logo_github.svg') no-repeat center;
+              background-size: 27px;
+              opacity: 0.8;
+              text-indent: 100%;    
+              white-space: nowrap;    
+              overflow: hidden;
+            }
+          }
+          .info {
+            position: relative;
+            span {
+              position: relative;
+              display: inline-block;
+              font-size: 1rem;
+              font-weight: 400;
+              & + span {
+                padding-left: 6px;
+                margin-left: 6px;
+                &:before {
+                  content: '';
+                  display: inline-block;
+                  position: absolute;
+                  top: 50%;
+                  left: 0;
+                  width: 1px;
+                  height: 8px;
+                  transform: translateY(-50%);
+                  background: #aaa;
+                }
+              }
+            }
+            & + .info {
+              margin-top: 2px;
+            }
+          }
+          p {
+            position: relative;
+            padding-top: 10px;
+            margin-top: 8px;
+            font-size: 1.2rem;
+            font-weight: 300;
+            &:after {
               content: '';
               display: inline-block;
               position: absolute;
-              top: 50%;
+              top: 0;
               left: 0;
-              width: 1px;
-              height: 8px;
-              transform: translateY(-50%);
-              background: #333;
+              right: 0;
+              height: 1px;
+              background: #aaa;
             }
           }
         }
-      }
-    }
-    section {
-      padding-top: 14px;
-      p {
-        font-size: 1.4rem;
-        font-weight: 300;
-      }
-      .tag-group {
-        margin-top: 16px;
-        font-size: 0;
-        span {
-          display: inline-block;
-          padding: 2px 8px;
-          font-size: 1.1rem;
-          border: 1px solid #333;
-          & + span {
-            margin-left: 4px;
+        .tag-group {
+          padding: 0 18px;
+          margin: auto 0 0 -6px;
+          font-size: 0;
+          box-sizing: border-box;
+          span {
+            display: inline-block;
+            padding: 0px 6px;
+            margin: 4px 0 0 4px;
+            line-height: 14px;
+            font-size: 1rem;
+            border: 1px solid #333;
           }
         }
       }
+      .back-face {
+        z-index: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 2px solid #333;
+        border-radius: 10px;
+        box-sizing: border-box;
+        background: #fff;
+        transition: transform 350ms, box-shadow 350ms;
+        cursor: pointer;
+        &:before,
+        &:after {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          top: 5px;
+          left: 5px;
+          right: 5px;
+          bottom: 5px;
+          border-radius: 6px;
+          overflow: hidden;
+        }
+        &:before {
+          border: 1px solid #333;
+          background-image: linear-gradient(-45deg, rgba(17, 17, 17, 0) 4px, #333 4px, rgba(17, 17, 17, 0) 5px);
+          background-size: 6px 6px;
+          background-repeat: repeat;
+        }
+        &:after {
+          top: 8px;
+          left: 8px;
+          right: 8px;
+          bottom: 8px;
+          border: 1px solid #666;
+          background-color: #eee;  
+          background-image: linear-gradient(45deg, rgba(17, 17, 17, 0) 4px, #666 4px, rgba(17, 17, 17, 0) 5px);
+          background-size: 6px 6px;
+          background-repeat: repeat;
+        }
+        span {
+          z-index: 1;
+          display: inline-block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          padding: 2px 12px;
+          font-size: 12px;
+          font-weight: 600;
+          border: 1px solid #333;
+          border-radius: 20px;
+          transform: translate(-50%, -50%);
+          background: #fff;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          white-space: nowrap;
+        }
+      }
     }
-    a.github {
-      text-indent: -9999px;
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 44px;
-      height: 44px;
-      background: url('../images/logo_github.svg') no-repeat center;
-      background-size: 24px;
-      opacity: 0.8;
-    }
+  }
+  .dim {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    // background: rgba(0, 0, 0, 0.08);
+    cursor: pointer;
   }
 }
