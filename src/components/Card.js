@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { animated, useSpring, useSpringRef } from '@react-spring/web';
+import { animated, useSpring } from '@react-spring/web';
 import { format } from 'date-fns';
 
 const config = {
@@ -17,14 +17,15 @@ export default function Card({
   
   useEffect(() => {
     const path = data.name;
+    const image = require(`../assets/images/card/intro_${data.name.replace('-', '_')}.png`);
     const [title, description] = data.description
     ? data.description.split(':') : ['title', 'description'];
     const pushedAt = format(new Date(data.pushed_at), 'yyyy-MM-dd');
     const createdAt = format(new Date(data.created_at), 'yyyy-MM-dd');
     const githubUrl = data.html_url;
     const topics = data.topics.reverse();
-
-    setInfo({ path, title, description, createdAt, pushedAt, topics, githubUrl })
+    
+    setInfo({ path, image, title, description, createdAt, pushedAt, topics, githubUrl })
   }, [data]);
   
   const cardRef = useRef(null);
@@ -82,7 +83,7 @@ export default function Card({
   };
   const onLeave = () => hoverApi.start({ transform: [0, 0] });
   const toMotionValue = (x, y) => `rotateX(${x}deg) rotateY(${y}deg)`;
-
+  
   return ( info && (
     <>
       <animated.div 
@@ -106,7 +107,7 @@ export default function Card({
           <div className="front-face">
             <header>
               <a className="link" href={ `/${info.path}/` } target="_blank" >
-                <img src={`./assets/images/card/intro_${data.name.replace('-', '_')}.png`} alt="카드 메인 이미지" />
+                <img src={info.image.default} alt="카드 메인 이미지" />
               </a>
             </header>
             <section>
