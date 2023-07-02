@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { animated, useTrail } from '@react-spring/web';
 
 import useStore from '@/store';
+import useCards from '@/hooks/useCards';
+
 import Card from '@/components/Card';
 
-const Main = () => {
+export default function Main() {
   const { cardData } = useStore();
+  const { updateCardData } = useCards();
   const [selectedCard, setSelectedCard] = useState(null);
+
+  useEffect(() => {
+    updateCardData();
+  }, []);
 
   const cardTrail = useTrail(cardData.length, {
     from: { opacity: 0, y: 35 },
@@ -17,7 +24,8 @@ const Main = () => {
       tension: 200,
       friction: 22,
     }
-  }, )
+  }, );
+
   const onCardSelect = id => setSelectedCard(id);
 
   return (
@@ -30,5 +38,3 @@ const Main = () => {
     </ul>
   )
 };
-
-export default Main;

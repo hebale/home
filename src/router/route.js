@@ -1,8 +1,8 @@
 import React from 'react';
-import { Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Main from '@/pages/Main';
-import Analysis from '@/pages/Analysis';
+import Statistics from '@/pages/Statistics';
 
  const siteMap = {
   Main: {
@@ -10,10 +10,10 @@ import Analysis from '@/pages/Analysis';
     path: '/',
     description: 'Main page'
   },
-  Analysis: {
-    title: 'Analysis',
-    path: '/analysis',
-    description: 'Analysis page'
+  Statistics: {
+    title: 'Statistics',
+    path: '/statistics',
+    description: 'Statistics page'
   },
 }
 
@@ -21,7 +21,7 @@ const Routing = () => {
   return (
     <Routes>
       <Route path={siteMap.Main.path} element={<Main />}/>
-      <Route path={siteMap.Analysis.path} element={<Analysis />}/>
+      <Route path={siteMap.Statistics.path} element={<Statistics />}/>
     </Routes>
   )
 }

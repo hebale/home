@@ -18,7 +18,7 @@ html {
   font-family: 'SUIT Variable';
   font-size: 10px;
   color: #303030;
-  background-color: #f5f5f5;
+  background-color: #fafafa;
 }
 body {
   margin: 0;
@@ -55,8 +55,11 @@ a {
   text-decoration: none;
 }
 
+@import './import/common.scss';
 @import './import/layout.scss';
 @import './import/card.scss';
+@import './import/chart.scss';
+@import './import/commit.scss';
 @import './import/transition.scss';
 @import './import/three.scss';
 @import './import/mobile.scss';

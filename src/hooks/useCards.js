@@ -1,24 +1,50 @@
-import useStore from '@/store/';
-import http from '@/common/http';
+import { format } from 'date-fns';
+import OctokitHttp from '@/common/octokit';
 
-export default function useCards() {
-  const { token, cardData, dispatch } = useStore();
+import useStore from '@/store';
 
-  const updateCardsData = () => {
-    const data = http.get({
-      base: 'https://api.github.com',
-      path: '/user/hebale/repos',
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
-      },
-      body: {
-        auth: token
-      }
+const useCards = () => {
+  const { repositories, dispatch } = useStore();
+
+  const updateCardData = async () => {
+    const repoNames = await repositories;
+    const response = await OctokitHttp.get({
+      base: '/users/{username}/repos',
     })
 
-    console.log(data);
-  }
+    dispatch({
+      type: 'UPDATE_CARD_DATA',
+      payload: response.data.filter(repository => repoNames.indexOf(repository.name) > -1)
+    });
+  };
+  
+  const setCardDataFormat = data => ({
+    path: data.name,
+    image: require(`../assets/images/card/intro_${data.name.replace('-', '_')}.png`),
+    ...(data.description 
+      ? { title: data.description.split(':')[0], description: data.description.split(':')[1] }
+      : { title: 'title', description: 'description' }
+    ),
+    pushedAt: format(new Date(data.pushed_at), 'yyyy-MM-dd'),
+    createdAt: format(new Date(data.created_at), 'yyyy-MM-dd'),
+    githubUrl: data.html_url,
+    topics: data.topics.reverse()
+  });
+
+  const toActiveValue = (t, l, y, s) => {
+    return `translateY(${-t}px) translateX(${-l}px) rotateY(${y}deg) scale(${s})`;
+  };
+
+  const toMotionValue = (x, y) => {
+    return `rotateX(${x}deg) rotateY(${y}deg)`;
+  };
+  
   return {
-    updateCardsData
+    updateCardData,
+    setCardDataFormat,
+    toActiveValue,
+    toMotionValue,
   }
-}
+};
+
+export default useCards;

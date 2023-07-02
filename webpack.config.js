@@ -1,6 +1,10 @@
+const webpack = require('webpack');
 const path = require('path');
+const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+dotenv.config();
 
 module.exports = { 
   entry: './src/index.js',
@@ -56,7 +60,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name(resourcePath) {
-                return resourcePath.split('/src')[1];
+                return resourcePath.replace(`${path.dirname(__filename)}/src`, '');
               },
             },
           },
@@ -73,11 +77,14 @@ module.exports = {
   },
   devServer: {
     host: 'localhost',
-    port: 3000,
+    port: 8080,
     open: true,
     historyApiFallback: true,
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env)
+    }),
     new HtmlWebpackPlugin({
       template: './index.html'
     }),

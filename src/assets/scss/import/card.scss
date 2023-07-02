@@ -1,9 +1,7 @@
 .card-wrap {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 260px));
-  gap: 14px;
-  margin: 0 auto;
-  max-width: 1194px;
+  gap: 20px;
   width: 100%;
   font-size: 0;
   justify-items: center;
@@ -254,29 +252,28 @@
           content: '';
           display: inline-block;
           position: absolute;
-          top: 5px;
-          left: 5px;
-          right: 5px;
-          bottom: 5px;
+          border: 1px solid #333;
           border-radius: 6px;
+          background-size: 6px 6px;
+          background-repeat: repeat;
           overflow: hidden;
         }
         &:before {
-          border: 1px solid #333;
+          top: 7px;
+          left: 7px;
+          right: 7px;
+          bottom: 7px;
+          border-color: #333;
           background-image: linear-gradient(-45deg, rgba(17, 17, 17, 0) 4px, #333 4px, rgba(17, 17, 17, 0) 5px);
-          background-size: 6px 6px;
-          background-repeat: repeat;
         }
         &:after {
-          top: 8px;
-          left: 8px;
-          right: 8px;
-          bottom: 8px;
-          border: 1px solid #666;
-          background-color: #eee;  
+          top: 11px;
+          left: 11px;
+          right: 11px;
+          bottom: 11px;
+          border-color: #666;
+          background-color: #fff;  
           background-image: linear-gradient(45deg, rgba(17, 17, 17, 0) 4px, #666 4px, rgba(17, 17, 17, 0) 5px);
-          background-size: 6px 6px;
-          background-repeat: repeat;
         }
         span {
           z-index: 1;
@@ -286,7 +283,7 @@
           left: 50%;
           padding: 2px 12px;
           font-size: 12px;
-          font-weight: 600;
+          font-weight: 500;
           border: 1px solid #333;
           border-radius: 20px;
           transform: translate(-50%, -50%);

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { animated, useSpring } from '@react-spring/web';
-import { format } from 'date-fns';
+
+import useCards from '@/hooks/useCards';
 
 const config = {
   mass: 1.5,
@@ -13,24 +14,15 @@ export default function Card({
   isSelected,
   onSelect
 }){
-  const [info, setInfo] = useState();
+  const [card, setCard] = useState();
+  const { setCardDataFormat, toActiveValue, toMotionValue } = useCards();
   
   useEffect(() => {
-    const path = data.name;
-    const image = require(`../assets/images/card/intro_${data.name.replace('-', '_')}.png`);
-    const [title, description] = data.description
-    ? data.description.split(':') : ['title', 'description'];
-    const pushedAt = format(new Date(data.pushed_at), 'yyyy-MM-dd');
-    const createdAt = format(new Date(data.created_at), 'yyyy-MM-dd');
-    const githubUrl = data.html_url;
-    const topics = data.topics.reverse();
-    
-    setInfo({ path, image, title, description, createdAt, pushedAt, topics, githubUrl })
-  }, [data]);
+    setCard(setCardDataFormat(data));
+  }, []);
   
   const cardRef = useRef(null);
   const [isActived, setIsActived] = useState(false);
-
   const [flipSpring, flipApi] = useSpring(() => ({
     isDefault: true,
     transform: [0, 0, 0, 1],
@@ -55,7 +47,6 @@ export default function Card({
       transform: setPos()
     });
   }
-  const toActiveValue = (t, l, y, s) => `translateY(${-t}px) translateX(${-l}px) rotateY(${y}deg) scale(${s})`;
   const inactiveCard = () => {
     flipApi.start({ 
       isDefault: true,
@@ -82,13 +73,12 @@ export default function Card({
     })
   };
   const onLeave = () => hoverApi.start({ transform: [0, 0] });
-  const toMotionValue = (x, y) => `rotateX(${x}deg) rotateY(${y}deg)`;
   
-  return ( info && (
+  return ( card && (
     <>
       <animated.div 
         ref={cardRef}
-        className={`card ${info.path}${isSelected ? ' selected' : ''}`}
+        className={`card ${card.path}${isSelected ? ' selected' : ''}`}
         style={{ transform: flipSpring.transform.to(toActiveValue) }}
         {...(!isSelected && { onClick: () => onSelectCard(data.id) } )}
       >
@@ -106,36 +96,36 @@ export default function Card({
         >
           <div className="front-face">
             <header>
-              <a className="link" href={ `/${info.path}/` } target="_blank" >
-                <img src={info.image.default} alt="카드 메인 이미지" />
+              <a className="link" href={ `/${card.path}/` } target="_blank" >
+                <img src={card.image.default} alt="카드 메인 이미지" />
               </a>
             </header>
             <section>
               <h2>
-                <span>{ info.title }</span>
-                <a className="link" href={ `/${info.path}/` } target="_blank" >Web</a>
-                <a className="github" href={ info.githubUrl } target="_blank">깃허브</a>
+                <span>{ card.title }</span>
+                <a className="link" href={ `/${card.path}/` } target="_blank" >Web</a>
+                <a className="github" href={ card.githubUrl } target="_blank">깃허브</a>
               </h2>
               <div className="info-group">
                 <div className="info">
                   <span>Created at</span>
-                  <span>{ info.createdAt }</span>
+                  <span>{ card.createdAt }</span>
                 </div>
                 {/* <div className="info">
                   <span>Updated at</span>
-                  <span>{ info.pushedAt }</span>
+                  <span>{ card.pushedAt }</span>
                 </div> */}
               </div>
-              <p>{ info.description }</p>
+              <p>{ card.description }</p>
             </section>
             <div className="tag-group">
-              {info.topics.map(topic => (
+              {card.topics.map(topic => (
                 <span className={topic} key={topic}>{topic}</span>
                 ))}
             </div>
           </div>
           <div className="back-face">
-            <span>{ info.path }</span>
+            <span>{ card.path }</span>
           </div>
         </animated.div>
       </animated.div>
