@@ -96,14 +96,14 @@ export default function Card({
         >
           <div className="front-face">
             <header>
-              <a className="link" href={ `/${card.path}/` } target="_blank" >
+              <a className="link" href={ `/project/${card.path}/` } target="_blank" >
                 <img src={card.image.default} alt="카드 메인 이미지" />
               </a>
             </header>
             <section>
               <h2>
                 <span>{ card.title }</span>
-                <a className="link" href={ `/${card.path}/` } target="_blank" >Web</a>
+                <a className="link" href={ `/project/${card.path}/` } target="_blank" >Web</a>
                 <a className="github" href={ card.githubUrl } target="_blank">깃허브</a>
               </h2>
               <div className="info-group">
