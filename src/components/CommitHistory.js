@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import useStore from '@/store';
 import useCommits from '@/hooks/useCommits';
 
-import Toolbar from '@/components/Toolbar';
 import CommitList from '@/components/CommitList';
 import CommitDetail from '@/components/CommitDetail';
 
+import Toolbar from '@/modules/Toolbar';
 import RadioGroup from '@/modules/RadioGroup';
 
 export default function CommitHistory({ repositories }){

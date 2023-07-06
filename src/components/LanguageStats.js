@@ -3,8 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useStore from '@/store';
 import useStatistics from '@/hooks/useStatistics';
 
-import Toolbar from '@/components/Toolbar';
 import CheckboxGroup from '@/modules/CheckboxGroup';
+import Toolbar from '@/modules/Toolbar';
 import BarChart from '@/modules/BarChart';
 
 export default function LangChart({ repositories }) {
