@@ -1,39 +1,80 @@
-import React, { useEffect } from 'react';
-import { getYear, getMonth } from 'date-fns';
+import React, { useState, useEffect } from 'react';
 
 import useStore from '@/store';
 import useCommits from '@/hooks/useCommits';
 
-import Commit from '@/components/Commit'
+import Toolbar from '@/components/Toolbar';
+import CommitList from '@/components/CommitList';
+import CommitDetail from '@/components/CommitDetail';
 
-export default function CommitHistory({ title }){
-  const { commitData } = useStore();
-  const { updateCommitData } = useCommits();
+import RadioGroup from '@/modules/RadioGroup';
+
+export default function CommitHistory({ repositories }){
+  const { commitList } = useStore();
+  const { updateCommitList, updateCommitDetail } = useCommits();
+  
+  const [loading, setLoading] = useState({ list: false, detail: false });
+  const [repoName, setRepoName] = useState(null);
+  const [repoStates, setRepoStates] = useState([]);
+  
+  useEffect(() => {
+    if (repositories.length > 0) {
+      setRepoStates(
+        repositories.map((repo, index) => {
+          const repoState = {};
+          repoState[repo] = index === 0;
+          
+          return repoState;
+        })
+      )
+    }
+  }, [repositories]);
+    
+  useEffect(() => {
+    if (repoStates.length > 0) {
+      setRepoName(repoStates.reduce((a, b) => {
+          const [key, value] = Object.entries(b)[0];
+          if (value) a = key;
+          return a;
+        }, '')
+      );
+    }
+  },[repoStates]);
 
   useEffect(() => {
-    const now = new Date();
-    const date = `${getYear(now)}-${getMonth(now) + 1}`;
-    
-    updateCommitData({ page: 1 });
-  }, []);
+    if (repoName) {
+      setLoading({ ...loading, list: true, detail: true });
+      updateCommitList({ repo: repoName });
+    }
+  }, [repoName]);
 
+  useEffect(() => {
+    if (repoName && commitList.length > 0 ) {
+      updateCommitDetail({ 
+        repo: repoName, 
+        hash: commitList[0]?.sha
+      });
+    }
+  }, [commitList])
+
+  const updateLoading = state => {
+    setLoading({ ...loading, ...state })
+  };
+  
   return (
     <>
-      <p>{ title }</p>
-      <div className="commit-history">
-        <div className='list'>
-          <p>date</p>
-          <ul> 
-            {commitData.map(commit => (
-              <li key={commit.id}>
-                <Commit data={commit}  />
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className='detail'>
-          detail
-        </div>
+      <Toolbar 
+        title={"커밋 기록"}
+        first={
+          <RadioGroup
+            dataSet={repoStates}
+            onChange={states => setRepoStates(states)}
+          /> 
+        }
+      />
+      <div className="commit-info">
+        <CommitList repoName={repoName} loading={loading.list} onLoadingState={updateLoading} />
+        <CommitDetail loading={loading.detail} onLoadingState={updateLoading} />
       </div>
     </>
   )

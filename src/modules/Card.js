@@ -89,9 +89,9 @@ export default function Card({
           {...(isActived && {
             onMouseLeave: () => onLeave(),
             onMouseMove: event => onHover(event),
-            onTouchCancel: () => onLeave(),
-            onTouchEnd: () => onLeave(),
-            onTouchMove: event => onHover(event),
+            // onTouchCancel: () => onLeave(),
+            // onTouchEnd: () => onLeave(),
+            // onTouchMove: event => onHover(event),
           })}
         >
           <div className="front-face">

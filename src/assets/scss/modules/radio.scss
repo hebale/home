@@ -1,0 +1,51 @@
+.radio-group {
+  margin: -4px 0 0 -6px;
+  label {
+    position: relative;
+    display: inline-block;
+    margin: 4px 0 0 6px;
+    overflow: hidden;
+    cursor: pointer;
+    input {
+      position: absolute;
+      appearance: none;
+      opacity: 0;
+      &:checked {
+        & ~ i {
+          opacity: 1;
+        }
+        & ~ span {
+          color: #fff;
+          background: #333;
+          border-color: #333;
+          font-weight: 700;
+          opacity: 1;
+        }
+      }
+    }
+    i {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transform: translateX(-4px);
+      box-sizing: border-box;
+    }
+    span {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 8px;
+      line-height: 24px;
+      letter-spacing: 0.05em;
+      border: 1px solid #ddd;
+      border-radius: 22px;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #333;
+      background: #fff;
+      opacity: 0.8;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+  }
+}

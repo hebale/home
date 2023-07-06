@@ -55,11 +55,8 @@ a {
   text-decoration: none;
 }
 
-@import './import/common.scss';
-@import './import/layout.scss';
-@import './import/card.scss';
-@import './import/chart.scss';
-@import './import/commit.scss';
-@import './import/transition.scss';
-@import './import/three.scss';
-@import './import/mobile.scss';
+@import './common/index.scss';
+@import './modules/index.scss';
+@import './components/index.scss';
+@import './layouts/index.scss';
+@import './pages/index.scss';

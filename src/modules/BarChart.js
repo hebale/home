@@ -68,21 +68,20 @@ export default function BarChart({ data, keys, indexBy }) {
   ), []);
 
   return (
-    <div className="chart-graph">
-      {data.length 
-        ? <ResponsiveBar 
-            data={data}
-            keys={keys}
-            indexBy={indexBy}
-            axisBottom={{
-              legend: "unit (byte)",
-              legendOffset: 35
-            }}
-            tooltip={tooltip}
-            {...chartStyle}
-          />
-        : <div className='no-data'></div>
-      }
+    <div className={`chart-graph${!data.length ? ' loading': ''}`}>
+      {!!data.length && ( 
+        <ResponsiveBar 
+          data={data}
+          keys={keys}
+          indexBy={indexBy}
+          axisBottom={{
+            legend: "unit (byte)",
+            legendOffset: 35
+          }}
+          tooltip={tooltip}
+          {...chartStyle}
+        />
+      )}
     </div>
   )
 }

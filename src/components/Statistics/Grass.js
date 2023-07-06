@@ -95,12 +95,6 @@ export default function Grass(props) {
   // }, []);
 
 
-
-
-// console.log(colors, normals, positions, indices)
-
-
-
   return (
     <mesh
       ref={grass}

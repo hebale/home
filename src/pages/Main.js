@@ -4,7 +4,7 @@ import { animated, useTrail } from '@react-spring/web';
 import useStore from '@/store';
 import useCards from '@/hooks/useCards';
 
-import Card from '@/components/Card';
+import Card from '@/modules/Card';
 
 export default function Main() {
   const { cardData } = useStore();
@@ -24,17 +24,20 @@ export default function Main() {
       tension: 200,
       friction: 22,
     }
-  }, );
+  });
 
   const onCardSelect = id => setSelectedCard(id);
 
   return (
-    <ul className="card-wrap">
-      {cardTrail.map(({ opacity, y }, index) => (
-        <animated.li style={{ opacity, y }} {...(selectedCard === cardData[index].id && { className: 'selected'})} key={cardData[index].id}>
-          <Card data={cardData[index]} isSelected={selectedCard === cardData[index].id} onSelect={onCardSelect} />
-        </animated.li>
-      ))}
-    </ul>
+    <div className="main">
+      <p>경력은 실력으로, 실력은 노력으로</p>
+      <ul className="card-wrap">
+        {cardTrail.map(({ opacity, y }, index) => (
+          <animated.li style={{ opacity, y }} {...(selectedCard === cardData[index].id && { className: 'selected'})} key={cardData[index].id}>
+            <Card data={cardData[index]} isSelected={selectedCard === cardData[index].id} onSelect={onCardSelect} />
+          </animated.li>
+        ))}
+      </ul>
+    </div>
   )
 };

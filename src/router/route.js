@@ -14,7 +14,7 @@ import Statistics from '@/pages/Statistics';
     title: 'Statistics',
     path: '/statistics',
     description: 'Statistics page'
-  },
+  }
 }
 
 const Routing = () => {

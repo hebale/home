@@ -10,7 +10,8 @@ const store = set => ({
   })(),
   cardData: [],
   languageData: [],
-  commitData: [],
+  commitList: [],
+  commitDetail: {},
   dispatch: action => set(state => reducer(state, action))
 });
 
@@ -20,8 +21,10 @@ const reducer = (_, { type, payload }) => {
       return { cardData: payload.sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)) };
     case 'UPDATE_LANGUAGE_DATA':
       return { languageData: payload };
-    case 'UPDATE_COMMIT_DATA':
-      return { commitData: payload }
+    case 'UPDATE_COMMIT_LIST':
+      return { commitList: payload }
+    case 'UPDATE_COMMIT_DETAIL':
+      return { commitDetail: payload }
   }
 };
 

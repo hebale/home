@@ -1,8 +1,8 @@
-import React from 'react';
-import { 
+import {
+  getYear,
+  getMonth,
   format,
   formatISO,
-  parseISO,
   startOfMonth,
   endOfMonth
 } from "date-fns";
@@ -13,7 +13,7 @@ import OctokitHttp from '@/common/octokit';
 const useCommits = () => {
   const { repositories, dispatch } = useStore();
 
-  const updateCommitData = async ({ date, page }) => {
+  const updateCommitList = async ({ repo, date, page }) => {
     const promises = [];
     const repoNames = await repositories;
 
@@ -22,19 +22,33 @@ const useCommits = () => {
       until: formatISO(endOfMonth(new Date(date.until)))
     };
 
-    for (let i = 0; i< repoNames.length; i++ ) {
+    if (!repo) {
+      for (let i = 0; i < repoNames.length; i++ ) {
+        promises.push(
+          OctokitHttp.get({
+            base: '/repos/{username}/{repository}/commits',
+            path: { repository: repoNames[i] },
+            query: {
+              per_page: 10,
+              ...period,
+              ...(page ? page : { page: 1 })
+            }
+          })
+        );
+      };
+    } else {
       promises.push(
         OctokitHttp.get({
           base: '/repos/{username}/{repository}/commits',
-          path: { repository: repoNames[i] },
+          path: { repository: repo },
           query: {
+            per_page: 10,
             ...period,
-            per_page: 5,
-            page
+            ...(page ? page : { page: 1 })
           }
         })
       );
-    };
+    }
     
     const responses = await Promise.allSettled(promises);
     let response = [];
@@ -44,45 +58,72 @@ const useCommits = () => {
         ...response,
         ...data.map(({ sha, commit }) => ({
           sha,
-          id: commit.id,
-          repository: repoNames[index], 
+          id: sha,
+          repository: repo ? repo : repoNames[index], 
           message: commit.message,
-          name: commit.committer.name,
-          date: commit.committer.date
+          author: commit.author.name,
+          tag: sha.substring(0, 7),
+          date: format(new Date(commit.committer.date), 'yyyy.MM.dd HH:mm:ss'),
+          group: `${getYear(new Date(commit.committer.date))}년 ${getMonth(new Date(commit.committer.date))}월`,
+          day: format(new Date(commit.committer.date), 'dd'),
+          time: format(new Date(commit.committer.date), 'HH:mm')
         }))
       ];
     });
 
-    console.log(
-      response.sort((a, b) => new Date(b.date) - new Date(a.date))
-    )
-
     dispatch({
-      type: 'UPDATE_COMMIT_DATA',
+      type: 'UPDATE_COMMIT_LIST',
       payload: response.sort((a, b) => new Date(b.date) - new Date(a.date))
     });
   };
 
-  const setCommitDataFormat = ({ 
-    repository,
-    message,
-    date,
-    url,
-    sha
-  }) => ({
-    day: format(new Date(date), 'dd'),
-    time: format(new Date(date), 'HH:mm'),
-    repository,
-    message,
-    url,
-    tag: (
-      <a href={sha} target="_blank" >{ sha.substring(0, 4) }</a>
-    )
-  });
+  const updateCommitDetail = async ({ repo, hash }) => {
+    const response = await OctokitHttp.get({
+      base: '/repos/{username}/{repository}/commits/{ref}',
+      path: { 
+        repository: repo,
+        ref: hash
+      }
+    });
+
+    const { sha, commit, stats, files } = response.data;
+
+    dispatch({
+      type: 'UPDATE_COMMIT_DETAIL',
+      payload: {
+        sha,
+        date: format(new Date(commit.author.date), 'yyyy.MM.dd HH:mm:ss'),
+        author: commit.author.name,
+        message: commit.message,
+        status: files.reduce((a, b) => {
+          if (!a.hasOwnProperty(b.status)) a[b.status] = 0;
+          a[b.status] += 1;
+          return a;
+        }, {}),
+        files: files.map(file => ({
+          sha: file.sha,
+          rawUrl: file.raw_url,
+          status: file.status,
+          filename: file.filename,
+          stats: {
+            additions: file.additions,
+            deletions: file.deletions,
+            changes: file.changes
+          },
+          patch: file.patch,
+          ...(file.patch && {
+            offset: parseInt(file.patch.match(/(?<=\@\@ \-).*?(?=\,)/)[0]),
+            old: file.patch.replace(/(\n\+.*?(?=\n))|(\@\@.*?\@\@)/g, '').replace(/\n\-/g, '\n '),
+            new: file.patch.replace(/(\n\-.*?(?=\n))|(\@\@.*?\@\@)/g, '').replace(/\n\+/g, '\n ')
+          }),
+        }))
+      }
+    });
+  };
 
   return {
-    updateCommitData,
-    setCommitDataFormat,
+    updateCommitList,
+    updateCommitDetail
   }
 }
 

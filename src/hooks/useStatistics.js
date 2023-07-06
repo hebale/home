@@ -28,11 +28,11 @@ const useStatistics = () => {
     });
   };
 
-  const chartDataFilter = ({ languageData, reposState}) => {
-    if(reposState.length === 0) return [];
+  const chartDataFilter = ({ languageData, repoStates }) => {
+    if(repoStates.length === 0) return [];
 
     const reposVisible = reposName => {
-      return reposState.filter(repos => repos.hasOwnProperty(reposName))[0][reposName];
+      return repoStates.filter(repos => repos.hasOwnProperty(reposName))[0][reposName];
     };
 
     const dataSet = languageData

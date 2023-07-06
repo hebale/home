@@ -1,24 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import useStatistics from '@/hooks/useStatistics';
+import useStore from '@/store';
 
 import CommitHistory from '@/components/CommitHistory';
-import LanguageStatistics from '@/components/LanguageStatistics';
+import LanguageStats from '@/components/LanguageStats';
 
 export default function Statistics() {
-  const { updateLanguageData } = useStatistics();
+  const { repositories } = useStore();
+
+  const [repos, setRepos] = useState([]);
 
   useEffect(() => {
-    updateLanguageData();
+    (async () => {
+      const data = await repositories;
+      setRepos(data);
+    })()
   }, []);
 
   return (
     <div className="statistics">
-      {/* <div className="stat-group">
-        <CommitHistory title={"커밋 기록"} />
-      </div> */}
       <div className="stat-group">
-        <LanguageStatistics title={"사용언어 통계"} />
+        <CommitHistory repositories={repos} />
+      </div>
+      <div className="stat-group">
+        <LanguageStats repositories={repos} />
       </div>
     </div>
   )

@@ -6,10 +6,12 @@ import Body from '@/layout/Body';
 
 const App = () => {
   return (
-    <React.Fragment>
-      <Header />
-      <Body />
-    </React.Fragment>
+    <main>
+      <div className='layout'>
+        <Header />
+        <Body />
+      </div>
+    </main>
   );
 };
 
