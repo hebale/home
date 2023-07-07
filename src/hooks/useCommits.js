@@ -42,7 +42,7 @@ const useCommits = () => {
           base: '/repos/{username}/{repository}/commits',
           path: { repository: repo },
           query: {
-            per_page: 10,
+            per_page: 30,
             ...period,
             ...(page ? page : { page: 1 })
           }

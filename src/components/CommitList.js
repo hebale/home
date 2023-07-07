@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { animated, useChain, useTrail, useSpringRef } from '@react-spring/web';
 
 import useStore from '@/store';
@@ -10,6 +10,7 @@ export default function CommitList({ loading, repoName, onLoadingState }) {
   const { commitList } = useStore();
   const { updateCommitDetail } = useCommits();
 
+  const scroll = useRef();
   const [dateGroup, setDateGroup] = useState([]);
   const [detailHash, setDetailHash] = useState(null);
 
@@ -30,6 +31,10 @@ export default function CommitList({ loading, repoName, onLoadingState }) {
   const groupCommits = useCallback((date, datas) => {
     return datas.filter(data => data.group === date);
   }, []);
+
+  useEffect(() => {
+    if(!loading && commitList.length > 0) scroll.current.scrollTop = 0;
+  }, [loading])
 
   // useEffect(() => {
   //   if(detailParams.repo) updateCommitDetail(detailParams);
@@ -71,24 +76,25 @@ export default function CommitList({ loading, repoName, onLoadingState }) {
   };
 
   return (
-    <div className={`list scroll${!dateGroup.length || loading ? ' loading' : ''}`}>
-      {dateGroup.map(date => (
-        <div className="inner" key={`${repoName}_${date}`}>
-          <p>{ date }</p>
-          <ul> 
-            {groupCommits(date ,commitList).map((commit, index) => (
-              <li 
-                key={commit.id}
-                {...(detailHash === commit.sha && { className: 'selected' })}
-                onClick={() => onClickCommit(repoName, commit.sha)}
-              >
-                <Commit data={commit} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-
+    <div className={`list${!dateGroup.length || loading ? ' loading' : ''}`}>
+      <div ref={scroll} className="inner scroll">
+        {dateGroup.map(date => (
+          <React.Fragment key={`${repoName}_${date}`}>
+            <p><i>main</i>{ date }</p>
+            <ul> 
+              {groupCommits(date ,commitList).map((commit, index) => (
+                <li 
+                  key={commit.id}
+                  {...(detailHash === commit.sha && { className: 'selected' })}
+                  onClick={() => onClickCommit(repoName, commit.sha)}
+                >
+                  <Commit data={commit} />
+                </li>
+              ))}
+            </ul>
+          </React.Fragment>
+        ))}
+      </div>
       {/* {dateGroup.length > 0 && groupTrail.map(({ opacity, y}, index) => (
         <animated.div style={{opacity, y}} key={`${repoName}_${index}`}>
           <p>{ dateGroup[index] }</p>

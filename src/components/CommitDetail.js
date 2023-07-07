@@ -52,11 +52,9 @@ export default function CommitDetail({ loading, onLoadingState }) {
           </div>
           <div className='body'>
             <div className='inner scroll'>
-              <ul>
-                {detail.files.map(file => (
-                  <DifferView file={file} key={file.sha} />
-                ))}
-              </ul>
+              {detail.files.map(file => (
+                <DifferView file={file} key={file.sha} />
+              ))}
             </div>
           </div>
         </>

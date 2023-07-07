@@ -66,8 +66,8 @@ export default function DifferView({ file }) {
   const toHeight = h => `${h}px`;
   
   return (
-    <li>
-      <div>
+    <>
+      <div className="title">
         <p>
           <span>{file.status}</span>
           <a href={file.rawUrl} target='_blank'>{file.filename}</a>
@@ -80,7 +80,7 @@ export default function DifferView({ file }) {
           ></button>
         )}
       </div>
-      <animated.div style={{ height: foldSpring.height.to(toHeight) }} >
+      <animated.div className="viewer" style={{ height: foldSpring.height.to(toHeight) }} >
         <div ref={viewerRef} >
           {file.patch && (
             <ReactDiffViewer
@@ -95,6 +95,6 @@ export default function DifferView({ file }) {
           )}
         </div>
       </animated.div>
-    </li>
+    </>
   );
 }
