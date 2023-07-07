@@ -56,20 +56,24 @@ const useCommits = () => {
     responses.map(response => response.value.data).forEach((data, index) => {
       response = [
         ...response,
-        ...data.map(({ sha, commit }) => ({
-          sha,
-          id: sha,
-          repository: repo ? repo : repoNames[index], 
-          message: commit.message,
-          author: commit.author.name,
-          tag: sha.substring(0, 7),
-          date: format(new Date(commit.committer.date), 'yyyy.MM.dd HH:mm:ss'),
-          group: `${getYear(new Date(commit.committer.date))}년 ${getMonth(new Date(commit.committer.date))}월`,
-          day: format(new Date(commit.committer.date), 'dd'),
-          time: format(new Date(commit.committer.date), 'HH:mm')
-        }))
+        ...data.map(({ sha, commit }) => {
+          return ({
+            sha,
+            id: sha,
+            repository: repo ? repo : repoNames[index], 
+            message: commit.message,
+            author: commit.author.name,
+            tag: sha.substring(0, 7),
+            date: format(new Date(commit.committer.date), 'yyyy.MM.dd HH:mm:ss'),
+            group: `${getYear(new Date(commit.committer.date))}년 ${getMonth(new Date(commit.committer.date)) + 1}월`,
+            day: format(new Date(commit.committer.date), 'dd'),
+            time: format(new Date(commit.committer.date), 'HH:mm')
+          })
+        }
+        )
       ];
     });
+
 
     dispatch({
       type: 'UPDATE_COMMIT_LIST',
