@@ -90,7 +90,7 @@ const useCommits = () => {
       }
     });
 
-    const { sha, commit, stats, files } = response.data;
+    const { sha, commit, files } = response.data;
 
     dispatch({
       type: 'UPDATE_COMMIT_DETAIL',

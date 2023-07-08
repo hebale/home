@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import useStore from '@/store';
 import CheckboxGroup from '@/modules/CheckboxGroup';
@@ -33,6 +33,19 @@ export default function CommitDetail({ loading, onLoadingState }) {
     }
   }, [commitDetail]);
 
+  const setDifferView = useCallback(files => {
+    if (!checkData) return [];
+
+    const viewChecks = checkData.reduce((a, b) => {
+      const [key, value] = Object.entries(b)[0];
+      if (value) a.push(key);
+
+      return a;
+    }, []);
+
+    return files.filter(file => viewChecks.indexOf(file.status) > -1 );
+  }, [checkData]);
+
   return (
     <div className={`detail${!detail || loading ? ' loading' : ''}`} >
       {detail && (
@@ -52,9 +65,10 @@ export default function CommitDetail({ loading, onLoadingState }) {
           </div>
           <div className='body'>
             <div className='inner scroll'>
-              {detail.files.map(file => (
-                <DifferView file={file} key={file.sha} />
-              ))}
+              {checkData && setDifferView(detail.files).map(file => (
+                  <DifferView file={file} key={file.sha} />
+                ))
+              }
             </div>
           </div>
         </>
