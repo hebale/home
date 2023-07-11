@@ -44,7 +44,7 @@ export default function CommitList({ loading, repoName, onLoadingState }) {
     setHash(hash);
   };
 
-  const [listSprings, listsApi] = useSprings(
+  const [listSprings] = useSprings(
     lists.length,
     (i) => ({
       from: { opacity: 0, y: 35 },
@@ -56,7 +56,7 @@ export default function CommitList({ loading, repoName, onLoadingState }) {
         tension: 260
       }
     }),
-    [lists]
+    []
   );
 
   return (
