@@ -56,7 +56,7 @@ export default function CommitList({ loading, repoName, onLoadingState }) {
         tension: 260
       }
     }),
-    []
+    [repoName]
   );
 
   return (
