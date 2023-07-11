@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { animated, useChain, useTrail, useSpringRef } from '@react-spring/web';
+import { animated, useSprings, useSpringRef, useTrail } from '@react-spring/web';
 
 import useStore from '@/store';
 import useCommits from '@/hooks/useCommits';
@@ -11,120 +11,70 @@ export default function CommitList({ loading, repoName, onLoadingState }) {
   const { updateCommitDetail } = useCommits();
 
   const scroll = useRef();
-  const [dateGroup, setDateGroup] = useState([]);
-  const [detailHash, setDetailHash] = useState(null);
+  const [lists, setLists] = useState([]);
+  const [hash, setHash] = useState(null);
+  
+  useEffect(() => {
+    if(!loading && commitList.length > 0) {
+      scroll.current.scrollTop = 0;
+    }
+  }, [loading]);
 
   useEffect(() => {
     if(commitList.length > 0) {
-      setDateGroup(
-        commitList.reduce((a, b) => {
-          if(a.indexOf(b.group) === -1) a.push(b.group);
-          return a;
-        },[])
-      )
+      let lists = [];
+
+      for (let i = 0; i < commitList.length; i++) {
+        if (i === 0 || commitList[i-1].group !== commitList[i].group) {
+          lists.push({ type: 'date', group: commitList[i].group });
+        }
+        lists.push({ type: 'commit', ...commitList[i] });
+      };
+
+      setLists(lists);
+      setHash(commitList[0].sha);
       
-      setDetailHash(commitList[0].sha);
-      onLoadingState({ list: false })
+      onLoadingState({ list: false });
     };
-  }, [commitList])
-  
-  const groupCommits = useCallback((date, datas) => {
-    return datas.filter(data => data.group === date);
-  }, []);
-
-  useEffect(() => {
-    if(!loading && commitList.length > 0) scroll.current.scrollTop = 0;
-  }, [loading])
-
-  // useEffect(() => {
-  //   if(detailParams.repo) updateCommitDetail(detailParams);
-  // }, [detailParams])
-
-  // react-spring
-  // const groupRef = useSpringRef();
-  // const groupTrail = useTrail(dateGroup.length, {
-  //   ref: groupRef,
-  //   from: { opacity: 0, y: 15 },
-  //   to: { opacity: 1, y: 0 },
-  //   delay: 250,
-  //   config: {
-  //     mass: 0.5,
-  //     tension: 200,
-  //     friction: 22,
-  //   }
-  // });
-
-  // const commitsRef = useSpringRef();
-  // const commitTrail = useTrail(5, {
-  //   ref: commitsRef,
-  //   from: { opacity: 0, y: 15 },
-  //   to: { opacity: 1, y: 0 },
-  //   delay: 250,
-  //   config: {
-  //     mass: 0.5,
-  //     tension: 200,
-  //     friction: 22,
-  //   }
-  // });
-
-  // useChain([groupRef, commitsRef])
+  }, [commitList]);
   
   const onClickCommit = (repo, hash) => {
     onLoadingState({ detail: true });
     updateCommitDetail({ repo, hash });
-    setDetailHash(hash);
+    setHash(hash);
   };
 
-  return (
-    <div className={`list${!dateGroup.length || loading ? ' loading' : ''}`}>
-      <div ref={scroll} className="inner scroll">
-        {dateGroup.map(date => (
-          <React.Fragment key={`${repoName}_${date}`}>
-            <p><i>main</i>{ date }</p>
-            <ul> 
-              {groupCommits(date ,commitList).map((commit, index) => (
-                <li 
-                  key={commit.id}
-                  {...(detailHash === commit.sha && { className: 'selected' })}
-                  onClick={() => onClickCommit(repoName, commit.sha)}
-                >
-                  <Commit data={commit} />
-                </li>
-              ))}
-            </ul>
-          </React.Fragment>
-        ))}
-      </div>
-      {/* {dateGroup.length > 0 && groupTrail.map(({ opacity, y}, index) => (
-        <animated.div style={{opacity, y}} key={`${repoName}_${index}`}>
-          <p>{ dateGroup[index] }</p>
-          <ul> 
-            {commitTrail.map(({ opacity, y}, index) => (
-              <animated.li style={{opacity, y}} key={commitList[index].id}>
-                <Commit data={commitList[index]} />
-              </animated.li>
-            ))}
-          </ul>
-        </animated.div>
-      ))}  */}
+  const [listSprings, listsApi] = useSprings(
+    lists.length,
+    (i) => ({
+      from: { opacity: 0, y: 35 },
+      to: { opacity: 1, y: 0 },
+      delay: 100 * i,
+      reset: true,
+      config: {
+        mass: 2,
+        tension: 260
+      }
+    }),
+    [lists]
+  );
 
-      {/* <ul> 
-        {commitList.map((commit, index) => (
-          <React.Fragment key={commit.id}>
-            {(index === 0 || commitList[index - 1].group !== commit.group )&& (
-              <li>
-                { commit.group }
-              </li>
-            )}
-            <li 
-              {...(detailParams.hash === commit.sha && { className: 'selected' })}
-              onClick={() => onClickCommit(repoName, commit.sha)}
+  return (
+    <div className={`list${!lists.length || loading ? ' loading' : ''}`}>
+      <div ref={scroll} className="inner scroll">
+        <ul>
+          {listSprings.map(({ opacity, y }, index) => (
+            <animated.li
+              key={`${repoName}_${index}`}
+              style={{ opacity, y }}
+              className={`${lists[index].type}${hash === lists[index].sha ? ' selected' : ''}`}
+              {...(lists[index].type === 'commit' && { onClick: () => onClickCommit(repoName, lists[index].sha) })}
             >
-              <Commit data={commit} />
-            </li>
-          </React.Fragment>
-        ))}
-      </ul> */}
+              <Commit data={lists[index]} />
+            </animated.li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 };

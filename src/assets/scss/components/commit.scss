@@ -16,173 +16,157 @@
     width: 35%;
     .inner {
       height: 100%;
-      padding: 0 16px 36px 40px;
+      padding: 0 18px 36px;
       box-sizing: border-box;
       overflow-y: auto;
-      > p {
-        z-index: 10;
-        position: sticky;
-        top: 0;
-        border-bottom: 1px solid #aaa;
-        line-height: 46px;
-        font-size: 1.4rem;
-        font-weight: 500;
-        background: #fff;
-        i {
-          position: absolute;
-          text-indent: 100%;
-          display: inline-block;
-          margin-left: -23px;
-          width: 14px;
-          height: 100%;
-          min-width: 14px;
-          overflow: hidden;
-          &:before {
-            display: inline-block;
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 14px;
-            height: 50%;
-            background: #fff;
-          }
-          &:after {
-            display: inline-block;
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 50%;
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: #333;
-            transform: translate(-50%, -50%);
-          }
-        }
-      }
       > ul {
         z-index: 5;
         position: relative;
-        margin-top: -1px;
+        padding-left: 24px;
+        &:before {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          top: 25px;
+          left: 7px;
+          bottom: 0;
+          width: 2px;
+          background: #333;
+        }
         li {
-          position: relative;
+          z-index: 5;
           display: flex;
-          padding: 0 24px 0 0;
-          border: 1px solid #aaa;
-          align-items: stretch;
-          cursor: pointer;
-          &.selected {
-            background: #333;
-            &:after {
-              border-color: #fff;
-            }
-            .date {
-              color: #fff;
-            }
-            .info {
-              p {
-                color: #fff;
-              }
-            }
-          }
-          &:after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: 8px;
-            width: 6px;
-            height: 6px;
-            border: 1px solid #333;
-            border-width: 0 1px 1px 0;
-            transform: translateY(-50%) rotate(-45deg);
-          }
-          i {
-            position: relative;
-            text-indent: 100%;
-            display: inline-block;
-            margin: -1px 24px 0 -24px;
-            width: 14px;
-            min-width: 14px;
-            font-size: 0;
+          align-items: center;
+          &:first-child,
+          &:last-child {
             &:before {
-              display: inline-block;
               content: '';
               position: absolute;
-              left: 6px;
-              bottom: 50%;
-              width: 2px;
-              height: 140%;
+              display: inline-block;
+              left: -21px;
+              bottom: calc(50% - 4px);
+              width: 11px;
+              height: 100%;
+              background: #fff;
+            }
+          }
+          &:last-child {
+            &:before {
+              top: 50%;
+            }
+          }
+          i {
+            text-indent: 100%;
+            position: relative;
+            display: inline-block;
+            top: 50%;
+            left: -20px;
+            border-radius: 50%;
+            overflow: hidden;
+          }
+          &.date {
+            z-index: 10;
+            position: sticky;
+            top: 0;
+            padding-top: 6px;
+            border-bottom: 1px solid #aaa;
+            line-height: 46px;
+            font-size: 1.4rem;
+            font-weight: 500;
+            background: #fff;
+            i {
+              width: 9px;
+              height: 9px;
               background: #333;
             }
-            &:last-of-type {
-              &:after {
-                z-index: 10;
-                display: inline-block;
-                content: '';
-                position: absolute;
-                left: 7px;
-                top: 50%;
-                width: 5px;
-                height: 5px;
-                border: 2px solid #333;
-                border-radius: 50%;
-                background: #fafafa;
-                transform: translate(-50%, -50%);
-              }
-            }
           }
-          .date {
-            display: inline-flex;
-            padding: 8px 0;
-            width: 40px;
-            min-width: 40px;
-            border-right: 1px solid #ddd;
-            flex-direction: column;
-            span {
-              display: inline-block;
-              font-size: 1.4rem;
-              font-weight: 500;
-              & + span {
-                margin-top: 2px;
-                font-size: 1.1rem;
-                letter-spacing: -0.02em;
-              }
-            }
-          }
-          .info {
-            padding: 8px 0 8px 12px;
-            .repository {
-              display: inline-block;
-              padding: 1px 4px;
-              line-height: 10px;
-              border: 1px solid #999;
-              border-radius: 10px;
-              color: #999;
-              font-weight: 600;
-              text-transform: uppercase;
-            }
-            > p {
-              margin-bottom: 2px;
-              font-size: 1.2rem;
-              font-weight: 500;
-            }
-            span {
-              display: inline-block;
-              font-size: 1rem;
-              font-weight: 400;
-              color: #999;
-            }
-            .tag {
-              display: inline-block;
-              margin-right: 8px;
-              line-height: 10px;
-              color: #999;
-              font-size: 1rem;
-            }
-          }
-          & + li {
+          &.commit {
+            position: relative;
+            padding: 0 24px 0 0;
             margin-top: -1px;
+            border: 1px solid #aaa;
+            cursor: pointer;
+            &.selected {
+              background: #333;
+              &:after {
+                border-color: #fff;
+              }
+              .date {
+                color: #fff;
+              }
+              .info {
+                p {
+                  color: #fff;
+                }
+              }
+            }
+            &:after {
+              content: '';
+              position: absolute;
+              top: 50%;
+              right: 8px;
+              width: 6px;
+              height: 6px;
+              border: 1px solid #333;
+              border-width: 0 1px 1px 0;
+              transform: translateY(-50%) rotate(-45deg);
+            }
+            i {
+              left: -21px;
+              width: 5px;
+              height: 5px;
+              border: 2px solid #333;
+              background: #fafafa;
+            }
+            .date {
+              display: inline-flex;
+              padding: 8px 0;
+              width: 40px;
+              min-width: 40px;
+              border-right: 1px solid #ddd;
+              flex-direction: column;
+              span {
+                display: inline-block;
+                font-size: 1.4rem;
+                font-weight: 500;
+                & + span {
+                  margin-top: 2px;
+                  font-size: 1.1rem;
+                  letter-spacing: -0.02em;
+                }
+              }
+            }
+            .info {
+              padding: 8px 0 8px 12px;
+              .repository {
+                display: inline-block;
+                padding: 1px 4px;
+                line-height: 10px;
+                border: 1px solid #999;
+                border-radius: 10px;
+                color: #999;
+                font-weight: 600;
+                text-transform: uppercase;
+              }
+              > p {
+                margin-bottom: 2px;
+                font-size: 1.2rem;
+                font-weight: 500;
+              }
+              span {
+                display: inline-block;
+                font-size: 1rem;
+                font-weight: 400;
+                color: #999;
+              }
+              .tag {
+                display: inline-block;
+                margin-right: 8px;
+                line-height: 10px;
+                color: #999;
+                font-size: 1rem;
+              }
+            }
           }
         }
       }
