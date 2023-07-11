@@ -111,10 +111,6 @@ export default function Card({
                   <span>Created at</span>
                   <span>{ card.createdAt }</span>
                 </div>
-                {/* <div className="info">
-                  <span>Updated at</span>
-                  <span>{ card.pushedAt }</span>
-                </div> */}
               </div>
               <p>{ card.description }</p>
             </section>

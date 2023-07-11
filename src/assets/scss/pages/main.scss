@@ -5,8 +5,14 @@
   justify-content: center;
   > p {
     margin: 12px 0 32px;
-    font-size: 1.7rem;
+    font-size: 1.8rem;
     font-weight: 300;
     text-align: center;
+    overflow: hidden;
+    span {
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+    }
   }
 }

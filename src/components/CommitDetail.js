@@ -31,6 +31,12 @@ export default function CommitDetail({ loading, onLoadingState }) {
         }, {})
       );
     }
+
+    return () => {
+      setDetail(null);
+      setCheckData(null);
+      setCheckLabel(null);
+    }
   }, [commitDetail]);
 
   const setDifferView = useCallback(files => {

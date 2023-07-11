@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { animated, useSprings, useSpringRef, useTrail } from '@react-spring/web';
+import React, { useRef, useState, useEffect } from 'react';
+import { animated, useSprings } from '@react-spring/web';
 
 import useStore from '@/store';
 import useCommits from '@/hooks/useCommits';
@@ -77,4 +77,4 @@ export default function CommitList({ loading, repoName, onLoadingState }) {
       </div>
     </div>
   )
-};
+};``
