@@ -6,7 +6,7 @@ import useCommits from '@/hooks/useCommits';
 
 import Commit from '@/modules/Commit';
 
-export default function CommitList({ loading, repoName, onLoadingState }) {
+export default function List({ loading, repoName, onLoadingState }) {
   const { commitList } = useStore();
   const { updateCommitDetail } = useCommits();
 

@@ -12,6 +12,7 @@ const store = set => ({
   languageData: [],
   commitList: [],
   commitDetail: {},
+  contributionData: [],
   dispatch: action => set(state => reducer(state, action))
 });
 
@@ -22,9 +23,11 @@ const reducer = (_, { type, payload }) => {
     case 'UPDATE_LANGUAGE_DATA':
       return { languageData: payload };
     case 'UPDATE_COMMIT_LIST':
-      return { commitList: payload }
+      return { commitList: payload };
     case 'UPDATE_COMMIT_DETAIL':
-      return { commitDetail: payload }
+      return { commitDetail: payload };
+    case 'UPDATE_COMTRIBUTION_DATA':
+      return { contributionData: payload };
   }
 };
 

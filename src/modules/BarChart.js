@@ -68,7 +68,7 @@ export default function BarChart({ data, keys, indexBy }) {
   ), []);
 
   return (
-    <div className={`chart-graph${!data.length ? ' loading': ''}`}>
+    <div className={`bar-graph${!data.length ? ' loading': ''}`}>
       {!!data.length && ( 
         <ResponsiveBar 
           data={data}

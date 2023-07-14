@@ -23,7 +23,13 @@ const Http = () => {
             }
           }
         )
-        const data = await response.json();
+        const data = await (() => {
+          if (!headers || headers['Content-Type'].indexOf('json') > -1) {
+            return response.json();
+          }
+          return response;
+        })();
+
         return data;
       } catch (error) {
         let message = 'Unknown Error!';

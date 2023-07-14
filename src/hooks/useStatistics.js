@@ -1,4 +1,5 @@
 import useStore from '@/store';
+import Http from '@/common/http';
 import OctokitHttp from '@/common/octokit';
 
 const useStatistics = () => {
@@ -55,9 +56,41 @@ const useStatistics = () => {
     return dataSet.sort((a, b) => a.total - b.total);
   };
 
+  const getContributionData = async () => {
+    const response = await Http.get({
+      path: '/github/users/hebale/contributions',
+      headers: { 'Content-Type': 'text/html' }
+    });
+
+    const text = await response.text();
+    const doc = new DOMParser().parseFromString(text, 'text/html');
+    const data = Array.prototype.slice.call(doc.querySelectorAll('table .ContributionCalendar-day'))
+      .reduce((a, b, index) => {
+        // if(index % 7 === 0) a.push([]);
+        // a.at(-1).push({
+        //   date: b.getAttribute('data-date'),
+        //   level: Number(b.getAttribute('data-level')),
+        //   count: Number(b.textContent.split(' ')[0]) || 0
+        // });
+
+        a.push({
+          date: b.getAttribute('data-date'),
+          level: Number(b.getAttribute('data-level')),
+          count: Number(b.textContent.split(' ')[0]) || 0
+        });
+        return a;
+      }, []);
+      
+    dispatch({
+      type: 'UPDATE_COMTRIBUTION_DATA',
+      payload: data.sort((a, b) => new Date(a.date) - new Date(b.date))
+    });
+  }
+
   return {
     updateLanguageData,
-    chartDataFilter
+    chartDataFilter,
+    getContributionData
   };
 };
 

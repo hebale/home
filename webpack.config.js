@@ -3,6 +3,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 dotenv.config();
 
@@ -78,8 +79,11 @@ module.exports = {
   devServer: {
     host: 'localhost',
     port: 8080,
-    open: true,
+    // open: true,
     historyApiFallback: true,
+    devMiddleware: {
+      writeToDisk: true,
+    },
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -90,6 +94,11 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: './assets/css/style.min.css'
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: './src/assets/json/', to: './assets/json/' },
+      ],
     })
   ]
 }

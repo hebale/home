@@ -4,7 +4,7 @@ import useStore from '@/store';
 import CheckboxGroup from '@/modules/CheckboxGroup';
 import DifferView from '@/modules/DifferView';
 
-export default function CommitDetail({ loading, onLoadingState }) {
+export default function Detail({ loading, onLoadingState }) {
   const { commitDetail } = useStore();
   
   const [detail, setDetail] = useState();

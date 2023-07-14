@@ -58,11 +58,13 @@ export default function LangChart({ repositories }) {
           />
         }
       />
-      <BarChart 
-        data={chartData}
-        keys={getActiveRepositories(repoStates)}
-        indexBy={"key"}
-      />
+      <div className="langauge-chart">
+        <BarChart 
+          data={chartData}
+          keys={getActiveRepositories(repoStates)}
+          indexBy={"key"}
+        />
+      </div>
     </>
   )
 };

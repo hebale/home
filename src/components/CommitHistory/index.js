@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import useStore from '@/store';
 import useCommits from '@/hooks/useCommits';
 
-import CommitList from '@/components/CommitList';
-import CommitDetail from '@/components/CommitDetail';
+import List from './List';
+import Detail from './Detail';
 
 import Toolbar from '@/modules/Toolbar';
 import RadioGroup from '@/modules/RadioGroup';
@@ -64,7 +64,7 @@ export default function CommitHistory({ repositories }){
   return (
     <>
       <Toolbar 
-        title={"커밋 기록"}
+        title='커밋 기록'
         first={
           <RadioGroup
             dataSet={repoStates}
@@ -73,8 +73,8 @@ export default function CommitHistory({ repositories }){
         }
       />
       <div className="commit-info">
-        <CommitList repoName={repoName} loading={loading.list} onLoadingState={updateLoading} />
-        <CommitDetail loading={loading.detail} onLoadingState={updateLoading} />
+        <List repoName={repoName} loading={loading.list} onLoadingState={updateLoading} />
+        <Detail loading={loading.detail} onLoadingState={updateLoading} />
       </div>
     </>
   )

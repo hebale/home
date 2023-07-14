@@ -1,17 +1,17 @@
 import React, { useRef } from 'react';
-import { PerspectiveCamera } from '@react-three/drei';
+import { OrthographicCamera } from '@react-three/drei';
 
 export default function Camera(){
   const cameraRef = useRef();
   
   return (
     <>
-      <PerspectiveCamera
+      <OrthographicCamera
         ref={cameraRef}
         makeDefault
-        args={[45, 800 / 600, 1, 1000]}
-        position={[0, 0, 20]}
-        fov={25}
+        position={[40, 10, 5.5]}
+        rotation={[-1.40, 0, 0]}
+        zoom={12}
       />
     </>
   )
