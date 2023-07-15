@@ -8,7 +8,6 @@ import LanguageStats from '@/components/LanguageStats';
 
 export default function Statistics() {
   const { repositories } = useStore();
-
   const [repos, setRepos] = useState([]);
 
   useEffect(() => {

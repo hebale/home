@@ -3,16 +3,47 @@
 }
 
 .grass-graph {
+  position: relative;
   border: 1px solid #ddd;
   border-radius: 6px;
   background: #fff;
   box-sizing: border-box;
   overflow-x: auto;
   .grass-canvas {
-    padding: 14px 0;
-    height: 170px;
+    height: 200px;
     width: 100%;
     min-width: 1090px;
+    &.loading {
+      .axis-x,
+      .axis-y {
+        display: none;
+      }
+    }
+  }
+
+  .axis-x,
+  .axis-y {
+    position: absolute;
+    span {
+      position: absolute;
+      display: inline-block;
+    }
+  }
+
+  .axis-x {
+    top: 20px;
+    left: 62px;
+    span {
+      font-size: 1.3rem;
+    }
+  }
+  .axis-y {
+    top: 45px;
+    left: 24px;
+    span {
+      width: 100%;
+      font-size: 1.1rem;
+    }
   }
 }
 

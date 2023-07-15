@@ -23,7 +23,7 @@ function GrassLink({ length }) {
   );
 
   useConeTwistConstraint(parentRef, ref, {
-    angle: Math.PI / 3,
+    angle: -Math.PI / 2,
     axisA: [0, 1, 0],
     axisB: [0, 1, 0],
     pivotA: [0, 0, 0],
@@ -36,7 +36,7 @@ function GrassLink({ length }) {
       <mesh ref={ref}>
         <boxGeometry args={args} />
         <meshBasicMaterial attach="material" color="#333" transparent={true} opacity={0.25 * length} />
-        <Edges color={'#fff'}/>
+        <Edges color={length > 3 ? '#fff' : '#333'}/>
       </mesh>
     </>
   )
@@ -46,13 +46,14 @@ export default function Grass({
   level,
   position
 }) {
-  const args = [1, 0, 1];
+  const args = [1,1];
   const [ref] = useBox(() => ({ args, position, type: 'Kinematic' }), useRef(null));
-  
+
   return (
     <>
       <mesh ref={ref}>
-        <boxGeometry args={[1, 0, 1]} />
+        <boxGeometry args={[1, 0.1, 1]} />
+        {level > 0 && <meshBasicMaterial attach="material" visible={false} />}
       </mesh>
 
       {level > 0 && (
