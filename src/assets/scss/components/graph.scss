@@ -104,11 +104,13 @@
     }
     span {
       font-weight: 500;
+      white-space: nowrap;
     }
     p {
       margin-top: 4px;
       font-size: 1.2rem;
       font-weight: 500;
+      white-space: nowrap;
     }
   }
 }
