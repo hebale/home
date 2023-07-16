@@ -21,7 +21,7 @@ export default function Ground({ position, onGrassHover }) {
     return (
       <mesh ref={ref}>
         <boxGeometry args={[0.3, 1, 0.3]} />
-        <meshBasicMaterial attach="material" visible={true} />
+        <meshBasicMaterial attach="material" visible={false} />
       </mesh>
     )
   }, []);
