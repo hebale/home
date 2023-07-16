@@ -2,6 +2,8 @@ import useStore from '@/store';
 import Http from '@/common/http';
 import OctokitHttp from '@/common/octokit';
 
+const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 const useStatistics = () => {
   const { repositories, dispatch } = useStore();
 
@@ -65,6 +67,7 @@ const useStatistics = () => {
     const text = await response.text();
     const doc = new DOMParser().parseFromString(text, 'text/html');
     const data = Array.prototype.slice.call(doc.querySelectorAll('table .ContributionCalendar-day'))
+      .sort((a, b) => new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date')))
       .reduce((a, b, index) => {
         // if(index % 7 === 0) a.push([]);
         // a.at(-1).push({
@@ -75,6 +78,7 @@ const useStatistics = () => {
 
         a.push({
           date: b.getAttribute('data-date'),
+          week: weeks[index % 7],
           level: Number(b.getAttribute('data-level')),
           count: Number(b.textContent.split(' ')[0]) || 0
         });
@@ -83,7 +87,7 @@ const useStatistics = () => {
       
     dispatch({
       type: 'UPDATE_COMTRIBUTION_DATA',
-      payload: data.sort((a, b) => new Date(a.date) - new Date(b.date))
+      payload: data
     });
   }
 

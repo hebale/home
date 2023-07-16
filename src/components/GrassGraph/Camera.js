@@ -8,6 +8,7 @@ export default function Camera({ position }){
         makeDefault
         position={position}
         rotation={[-Math.PI / 2, 0, 0]}
+        // rotation={[0, 0, 0]}
         near={-10}
         far={10}
         zoom={12}
