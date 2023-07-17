@@ -68,11 +68,12 @@ export default function Card({
       -(x - rect.left - rect.width / 2) / 5
     ];
     const eventType = event.type === 'touchmove' ? event.touches[0] : event;
+
     hoverApi.start({
       transform: setPos(eventType['clientX'], eventType['clientY'], rect),
     })
   };
-  const onLeave = () => hoverApi.start({ transform: [0, 0] });
+  const onLeave = event => hoverApi.start({ transform: [0, 0] });
   
   return ( card && (
     <>
@@ -81,18 +82,18 @@ export default function Card({
         className={`card ${card.path}${isSelected ? ' selected' : ''}`}
         style={{ transform: flipSpring.transform.to(toActiveValue) }}
         {...(!isSelected && { onClick: () => onSelectCard(data.id) } )}
+        {...(isActived && {
+          onMouseLeave: event => onLeave(event),
+          onMouseMove: event => onHover(event),
+          // onTouchCancel: () => onLeave(),
+          // onTouchEnd: () => onLeave(),
+          // onTouchMove: event => onHover(event),
+        })}
       >
         <animated.div
-          className="inner" 
           ref={innerRef}
+          className="inner" 
           style={{ transform: hoverSpring.transform.to(toMotionValue) }}
-          {...(isActived && {
-            onMouseLeave: () => onLeave(),
-            onMouseMove: event => onHover(event),
-            // onTouchCancel: () => onLeave(),
-            // onTouchEnd: () => onLeave(),
-            // onTouchMove: event => onHover(event),
-          })}
         >
           <div className="front-face">
             <header>
