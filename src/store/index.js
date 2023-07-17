@@ -6,7 +6,7 @@ import Http from '@/common/http';
 const store = set => ({
   repositories: (async () => {
     const response = await Http.get({ path: '/' });
-    return response.map(card => card.path);
+    return response.projects;
   })(),
   cardData: [],
   languageData: [],
