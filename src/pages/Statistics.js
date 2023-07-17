@@ -7,13 +7,13 @@ import CommitHistory from '@/components/CommitHistory';
 import LanguageStats from '@/components/LanguageStats';
 
 export default function Statistics() {
-  const { repositories } = useStore();
+  const { homeData } = useStore();
   const [repos, setRepos] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const data = await repositories;
-      setRepos(data);
+      const { repositories } = await homeData;
+      setRepos(repositories);
     })()
   }, []);
 

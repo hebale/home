@@ -4,9 +4,9 @@ import { devtools } from 'zustand/middleware';
 import Http from '@/common/http';
 
 const store = set => ({
-  repositories: (async () => {
+  homeData: (async () => {
     const response = await Http.get({ path: '/' });
-    return response.projects;
+    return response;
   })(),
   cardData: [],
   languageData: [],

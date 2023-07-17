@@ -4,17 +4,18 @@ import OctokitHttp from '@/common/octokit';
 import useStore from '@/store';
 
 const useCards = () => {
-  const { repositories, dispatch } = useStore();
+  const { homeData, dispatch } = useStore();
 
   const updateCardData = async () => {
-    const repoNames = await repositories;
+    const { repositories } = await homeData;
+
     const response = await OctokitHttp.get({
       base: '/users/{username}/repos',
     })
 
     dispatch({
       type: 'UPDATE_CARD_DATA',
-      payload: response.data.filter(repository => repoNames.indexOf(repository.name) > -1)
+      payload: response.data.filter(repository => repositories.indexOf(repository.name) > -1)
     });
   };
   

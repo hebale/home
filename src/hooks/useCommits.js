@@ -11,11 +11,11 @@ import useStore from '@/store';
 import OctokitHttp from '@/common/octokit';
 
 const useCommits = () => {
-  const { repositories, dispatch } = useStore();
+  const { homeData, dispatch } = useStore();
 
   const updateCommitList = async ({ repo, date, page }) => {
     const promises = [];
-    const repoNames = await repositories;
+    const { repositories } = await homeData;
 
     const period = date && {
       since: formatISO(startOfMonth(new Date(date.since))),
@@ -23,11 +23,11 @@ const useCommits = () => {
     };
 
     if (!repo) {
-      for (let i = 0; i < repoNames.length; i++ ) {
+      for (let i = 0; i < repositories.length; i++ ) {
         promises.push(
           OctokitHttp.get({
             base: '/repos/{username}/{repository}/commits',
-            path: { repository: repoNames[i] },
+            path: { repository: repositories[i] },
             query: {
               per_page: 10,
               ...period,
@@ -60,7 +60,7 @@ const useCommits = () => {
           return ({
             sha,
             id: sha,
-            repository: repo ? repo : repoNames[index], 
+            repository: repo ? repo : repositories[index], 
             message: commit.message,
             author: commit.author.name,
             tag: sha.substring(0, 7),

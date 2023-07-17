@@ -5,17 +5,17 @@ import OctokitHttp from '@/common/octokit';
 const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const useStatistics = () => {
-  const { repositories, dispatch } = useStore();
+  const { homeData, dispatch } = useStore();
 
   const updateLanguageData = async () => {
     const promises = [];
-    const repoNames = await repositories;
+    const { repositories } = await homeData;
     
-    for (let i = 0; i< repoNames.length; i++ ) {
+    for (let i = 0; i< repositories.length; i++ ) {
       promises.push(
         OctokitHttp.get({
           base: '/repos/{username}/{repository}/languages',
-          path: { repository: repoNames[i] }
+          path: { repository: repositories[i] }
         })
       );
     };
@@ -25,7 +25,7 @@ const useStatistics = () => {
     dispatch({
       type: 'UPDATE_LANGUAGE_DATA',
       payload: responses.map((response, index) => ({
-        repository: repoNames[index],
+        repository: repositories[index],
         data: response.value.data
       }))
     });
