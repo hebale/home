@@ -1,15 +1,27 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import useStore from '@/store';
+import useCommit from '@/hooks/useCommits';
+
 import CheckboxGroup from '@/modules/CheckboxGroup';
 import DifferView from '@/modules/DifferView';
 
-export default function Detail({ loading, onLoadingState }) {
-  const { commitDetail } = useStore();
-  
+export default function Detail({ loading, repoName, onLoadingState }) {
+  const { commitList, commitDetail } = useStore();
+  const { updateCommitDetail } = useCommit();
+
   const [detail, setDetail] = useState();
   const [checkData, setCheckData] = useState();
   const [checkLabel, setCheckLabel] = useState();
+
+  useEffect(() => {
+    if (repoName && commitList.length > 0 ) {
+      updateCommitDetail({ 
+        repo: repoName, 
+        hash: commitList[0]?.sha
+      });
+    }
+  }, [commitList]);
 
   useEffect(() => {
     if(commitDetail.hasOwnProperty('sha')) {

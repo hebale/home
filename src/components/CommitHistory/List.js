@@ -8,17 +8,20 @@ import Commit from '@/modules/Commit';
 
 export default function List({ loading, repoName, onLoadingState }) {
   const { commitList } = useStore();
-  const { updateCommitDetail } = useCommits();
+  const { updateCommitList, updateCommitDetail } = useCommits();
 
   const scroll = useRef();
   const [lists, setLists] = useState([]);
   const [hash, setHash] = useState(null);
   
   useEffect(() => {
-    if(!loading && commitList.length > 0) {
-      scroll.current.scrollTop = 0;
-    }
-  }, [loading]);
+    scroll.current.scrollTop = 0;
+
+    if (repoName) {
+      onLoadingState({ ...loading, list: true, detail: true });
+      updateCommitList({ repo: repoName });
+    };
+  }, [repoName]);
 
   useEffect(() => {
     if(commitList.length > 0) {
@@ -49,14 +52,14 @@ export default function List({ loading, repoName, onLoadingState }) {
     (i) => ({
       from: { opacity: 0, y: 35 },
       to: { opacity: 1, y: 0 },
-      delay: 100 * i,
+      delay: i < 9 ? 80 * i : 0,
       reset: true,
       config: {
         mass: 2,
-        tension: 260
+        tension: 220
       }
     }),
-    [repoName]
+    [commitList]
   );
 
   return (

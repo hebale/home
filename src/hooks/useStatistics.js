@@ -89,12 +89,20 @@ const useStatistics = () => {
       type: 'UPDATE_COMTRIBUTION_DATA',
       payload: data
     });
-  }
+  };
+
+  const resetContributionData = () => {
+    dispatch({
+      type: 'UPDATE_COMTRIBUTION_DATA',
+      payload: []
+    });
+  };
 
   return {
     updateLanguageData,
     chartDataFilter,
-    getContributionData
+    getContributionData,
+    resetContributionData
   };
 };
 

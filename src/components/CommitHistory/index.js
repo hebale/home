@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import useStore from '@/store';
 import useCommits from '@/hooks/useCommits';
 
 import List from './List';
@@ -10,12 +9,18 @@ import Toolbar from '@/modules/Toolbar';
 import RadioGroup from '@/modules/RadioGroup';
 
 export default function CommitHistory({ repositories }){
-  const { commitList } = useStore();
-  const { updateCommitList, updateCommitDetail } = useCommits();
+  const { resetCommitList, resetCommitDetail } = useCommits();
   
   const [loading, setLoading] = useState({ list: false, detail: false });
   const [repoName, setRepoName] = useState(null);
   const [repoStates, setRepoStates] = useState([]);
+
+  useEffect(() => {
+    return () => {
+      resetCommitList();
+      resetCommitDetail();
+    }
+  }, [])
   
   useEffect(() => {
     if (repositories.length > 0) {
@@ -41,22 +46,6 @@ export default function CommitHistory({ repositories }){
     }
   },[repoStates]);
 
-  useEffect(() => {
-    if (repoName) {
-      setLoading({ ...loading, list: true, detail: true });
-      updateCommitList({ repo: repoName });
-    }
-  }, [repoName]);
-
-  useEffect(() => {
-    if (repoName && commitList.length > 0 ) {
-      updateCommitDetail({ 
-        repo: repoName, 
-        hash: commitList[0]?.sha
-      });
-    }
-  }, [commitList])
-
   const updateLoading = state => {
     setLoading({ ...loading, ...state })
   };
@@ -73,8 +62,8 @@ export default function CommitHistory({ repositories }){
         }
       />
       <div className="commit-info">
-        <List repoName={repoName} loading={loading.list} onLoadingState={updateLoading} />
-        <Detail loading={loading.detail} onLoadingState={updateLoading} />
+        <List loading={loading.list} repoName={repoName} onLoadingState={updateLoading} />
+        <Detail loading={loading.detail} repoName={repoName} onLoadingState={updateLoading} />
       </div>
     </>
   )

@@ -6,10 +6,11 @@ import Toolbar from '@/modules/Toolbar';
 import GrassCanvas from './GrassCanvas';
 
 export default function GrassGraph() {
-  const { getContributionData } = useStatistics();
+  const { getContributionData, resetContributionData } = useStatistics();
 
   useEffect(() => {
     getContributionData();
+    return () => resetContributionData();
   }, []);
   
   return (

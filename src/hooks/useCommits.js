@@ -16,7 +16,7 @@ const useCommits = () => {
   const updateCommitList = async ({ repo, date, page }) => {
     const promises = [];
     const { repositories } = await homeData;
-
+    
     const period = date && {
       since: formatISO(startOfMonth(new Date(date.since))),
       until: formatISO(endOfMonth(new Date(date.until)))
@@ -29,9 +29,9 @@ const useCommits = () => {
             base: '/repos/{username}/{repository}/commits',
             path: { repository: repositories[i] },
             query: {
-              per_page: 10,
+              per_page: 30,
               ...period,
-              ...(page ? page : { page: 1 })
+              ...(page ? { page } : { page: 1 })
             }
           })
         );
@@ -44,7 +44,7 @@ const useCommits = () => {
           query: {
             per_page: 30,
             ...period,
-            ...(page ? page : { page: 1 })
+            ...(page ? { page } : { page: 1 })
           }
         })
       );
@@ -53,31 +53,39 @@ const useCommits = () => {
     const responses = await Promise.allSettled(promises);
     let response = [];
 
-    responses.map(response => response.value.data).forEach((data, index) => {
-      response = [
-        ...response,
-        ...data.map(({ sha, commit }) => {
-          return ({
-            sha,
-            id: sha,
-            repository: repo ? repo : repositories[index], 
-            message: commit.message,
-            author: commit.author.name,
-            tag: sha.substring(0, 7),
-            date: format(new Date(commit.committer.date), 'yyyy.MM.dd HH:mm:ss'),
-            group: `${getYear(new Date(commit.committer.date))}년 ${getMonth(new Date(commit.committer.date)) + 1}월`,
-            day: format(new Date(commit.committer.date), 'dd'),
-            time: format(new Date(commit.committer.date), 'HH:mm')
-          })
-        }
-        )
-      ];
-    });
-
+    if (responses.length > 0) {
+      responses.map(response => response.value.data).forEach((data, index) => {
+        response = [
+          ...response,
+          ...data.map(({ sha, commit }) => {
+            return ({
+              sha,
+              id: sha,
+              repository: repo ? repo : repositories[index], 
+              message: commit.message,
+              author: commit.author.name,
+              tag: sha.substring(0, 7),
+              date: format(new Date(commit.committer.date), 'yyyy.MM.dd HH:mm:ss'),
+              group: `${getYear(new Date(commit.committer.date))}년 ${getMonth(new Date(commit.committer.date)) + 1}월`,
+              day: format(new Date(commit.committer.date), 'dd'),
+              time: format(new Date(commit.committer.date), 'HH:mm')
+            })
+          }
+          )
+        ];
+      });
+    }
 
     dispatch({
       type: 'UPDATE_COMMIT_LIST',
       payload: response.sort((a, b) => new Date(b.date) - new Date(a.date))
+    });
+  };
+
+  const resetCommitList = () => {
+    dispatch({
+      type: 'UPDATE_COMMIT_LIST',
+      payload: []
     });
   };
 
@@ -124,10 +132,19 @@ const useCommits = () => {
       }
     });
   };
+  
+  const resetCommitDetail = () => {
+    dispatch({
+      type: 'UPDATE_COMMIT_DETAIL',
+      payload: []
+    });
+  };
 
   return {
     updateCommitList,
-    updateCommitDetail
+    resetCommitList,
+    updateCommitDetail,
+    resetCommitDetail
   }
 }
 

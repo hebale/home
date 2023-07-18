@@ -17,9 +17,9 @@ const App = () => {
     };
   }, [])
   
-  const onResizeWindow = debounce(() => {
+  const onResizeWindow = useCallback(debounce(() => {
     setIsPc(!isMobile && window.innerWidth >= 1200);
-  }, 400);
+  }, 400), []);
   
   return (
     <main className={ isPc ? "pc" : "mobile" }>

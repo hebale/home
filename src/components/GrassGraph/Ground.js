@@ -2,12 +2,12 @@ import React, { useRef, useCallback, useState } from 'react';
 import { Physics, useSphere } from '@react-three/cannon';
 import { useFrame } from '@react-three/fiber';
 
-import useStore from '@/store';
+// import useStore from '@/store';
 
 import Grass from './Grass';
 
-export default function Ground({ position, onGrassHover }) {
-  const { contributionData } = useStore();
+export default function Ground({ data, position, onGrassHover }) {
+  // const { contributionData } = useStore();
   const [posX, posY, posZ] = position;
 
   const Pointer = useCallback(({ radius, onCollide, onCollideBegin, onCollideEnd }) => {
@@ -35,7 +35,7 @@ export default function Ground({ position, onGrassHover }) {
         onCollideEnd={() => onGrassHover({ visible: false })}
       />
 
-      {contributionData.map((day, index) => {
+      {data.map((day, index) => {
         const gap = 1.6;  
         const axisX = gap * parseInt(index / 7, 10);
         const axisZ = (index % 7) * gap;

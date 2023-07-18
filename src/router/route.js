@@ -4,24 +4,27 @@ import { Routes, Route } from 'react-router-dom';
 import Main from '@/pages/Main';
 import Statistics from '@/pages/Statistics';
 
- const siteMap = {
-  Main: {
+ const siteMap = [
+  {
     title: 'Main',
     path: '/',
+    element: <Main />,
     description: 'Main page'
   },
-  Statistics: {
+  {
     title: 'Statistics',
     path: '/statistics',
+    element: <Statistics />,
     description: 'Statistics page'
   }
-}
+];
 
 const Routing = () => {
   return (
     <Routes>
-      <Route path={siteMap.Main.path} element={<Main />}/>
-      <Route path={siteMap.Statistics.path} element={<Statistics />}/>
+      {siteMap.map(site => (
+        <Route key={site.title} path={site.path} element={site.element}/>
+      ))}
     </Routes>
   )
 }
