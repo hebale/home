@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { siteMap } from '@/router/route';
+
 export default function Header() {
   return (
     <header>
@@ -9,13 +11,13 @@ export default function Header() {
         <a href="/">home</a>
       </h1>
       <nav>
-        {['main', 'statistics'].map(path => (
+        {siteMap.map(site => (
           <NavLink 
-            key={path}
-            to={`/${path === 'main' ? '' : path}`}
+            key={site.title}
+            to={site.path}
             className={({ isActive }) => isActive ? "active" : ""}
           >
-            { path }
+            { site.title }
           </NavLink>
         ))}
       </nav>

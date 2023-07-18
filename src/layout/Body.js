@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Routing from '@/router/route';
+import Routing from '@/router';
 
 export default function Body() {
   return (
