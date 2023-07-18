@@ -2,6 +2,7 @@ import React from 'react';
 
 import Main from '@/pages/Main';
 import Statistics from '@/pages/Statistics';
+import Lab from '@/pages/Lab';
 
 export const siteMap = [
   {
@@ -15,5 +16,11 @@ export const siteMap = [
     path: '/statistics',
     element: <Statistics />,
     description: 'Statistics page'
+  },
+  {
+    title: 'Lab',
+    path: '/lab',
+    element: <Lab />,
+    description: 'Lab page'
   }
 ];
