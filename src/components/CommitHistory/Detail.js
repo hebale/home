@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import useStore from '@/store';
-import useCommit from '@/hooks/useCommits';
+import useCommit from '@/hooks/useCommit';
 
 import CheckboxGroup from '@/modules/CheckboxGroup';
 import DifferView from '@/modules/DifferView';

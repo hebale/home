@@ -10,7 +10,7 @@ import {
 import useStore from '@/store';
 import OctokitHttp from '@/common/octokit';
 
-const useCommits = () => {
+const useCommit = () => {
   const { homeData, dispatch } = useStore();
 
   const updateCommitList = async ({ repo, date, page }) => {
@@ -148,4 +148,4 @@ const useCommits = () => {
   }
 }
 
-export default useCommits;
+export default useCommit;

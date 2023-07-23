@@ -1,7 +1,24 @@
+import React from 'react';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import Http from '@/common/http';
+
+import WeatherCanva from '@/lab/WeatherCanvas';
+const blueprints = [
+  {
+    title: 'weather',
+    description: 'weather visual interaction',
+    library: 'p5.js',
+    contents: <WeatherCanva />
+  },
+  // {
+  //   title: 'weather',
+  //   description: 'weather visual interaction',
+  //   library: 'p5.js',
+  //   contents: <WeatherCanva />
+  // }
+];
 
 const store = set => ({
   homeData: (async () => {
@@ -13,6 +30,7 @@ const store = set => ({
   commitList: [],
   commitDetail: {},
   contributionData: [],
+  blueprintData: blueprints,
   dispatch: action => set(state => reducer(state, action))
 });
 

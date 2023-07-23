@@ -81,9 +81,9 @@ module.exports = {
     port: 8080,
     // open: true,
     historyApiFallback: true,
-    devMiddleware: {
-      writeToDisk: true,
-    },
+    // devMiddleware: {
+    //   writeToDisk: true,
+    // },
   },
   plugins: [
     new webpack.DefinePlugin({
