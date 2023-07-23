@@ -1,0 +1,48 @@
+.lab {
+  > p {
+    margin: 12px 0 32px;
+    font-size: 1.8rem;
+    font-weight: 300;
+    text-align: center;
+    overflow: hidden;
+    span {
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+    }
+  }
+  .viewer {
+    z-index: 100;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    border-top: 1px solid #333;
+    background: #fff;
+    box-sizing: border-box;
+    overflow: hidden;
+    > button {
+      z-index: 10;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2rem;
+    }
+    .contents {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    .paper-roll {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-top: 1px solid #333;
+      background: #fff;
+    }
+  }
+}

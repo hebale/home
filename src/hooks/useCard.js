@@ -3,7 +3,7 @@ import OctokitHttp from '@/common/octokit';
 
 import useStore from '@/store';
 
-const useCards = () => {
+const useCard = () => {
   const { homeData, dispatch } = useStore();
 
   const updateCardData = async () => {
@@ -31,21 +31,11 @@ const useCards = () => {
     githubUrl: data.html_url,
     topics: data.topics.reverse()
   });
-
-  const toActiveValue = (t, l, y, s) => {
-    return `translateY(${-t}px) translateX(${-l}px) rotateY(${y}deg) scale(${s})`;
-  };
-
-  const toMotionValue = (x, y) => {
-    return `rotateX(${x}deg) rotateY(${y}deg)`;
-  };
   
   return {
     updateCardData,
-    setCardDataFormat,
-    toActiveValue,
-    toMotionValue,
+    setCardDataFormat
   }
 };
 
-export default useCards;
+export default useCard;

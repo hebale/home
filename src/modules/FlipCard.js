@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { animated, useSpring } from '@react-spring/web';
 
-import useCards from '@/hooks/useCards';
+import useCard from '@/hooks/useCard';
+import useSpringToValue from "@/hooks/useSpringToValue";
 
 const config = {
   mass: 1.5,
@@ -15,7 +16,8 @@ export default function Card({
   onSelect
 }){
   const [card, setCard] = useState();
-  const { setCardDataFormat, toActiveValue, toMotionValue } = useCards();
+  const { setCardDataFormat } = useCard();
+  const { toCardActive, toCardMotion } = useSpringToValue();
   
   useEffect(() => {
     setCard(setCardDataFormat(data));
@@ -46,7 +48,8 @@ export default function Card({
       isDefault: false,
       transform: setPos()
     });
-  }
+  };
+
   const inactiveCard = () => {
     flipApi.start({ 
       isDefault: true,
@@ -73,27 +76,25 @@ export default function Card({
       transform: setPos(eventType['clientX'], eventType['clientY'], rect),
     })
   };
-  const onLeave = event => hoverApi.start({ transform: [0, 0] });
+
+  const onLeave = () => hoverApi.start({ transform: [0, 0] });
   
   return ( card && (
     <>
       <animated.div 
         ref={cardRef}
         className={`card ${card.path}${isSelected ? ' selected' : ''}`}
-        style={{ transform: flipSpring.transform.to(toActiveValue) }}
+        style={{ transform: flipSpring.transform.to(toCardActive) }}
         {...(!isSelected && { onClick: () => onSelectCard(data.id) } )}
         {...(isActived && {
           onMouseLeave: event => onLeave(event),
-          onMouseMove: event => onHover(event),
-          // onTouchCancel: () => onLeave(),
-          // onTouchEnd: () => onLeave(),
-          // onTouchMove: event => onHover(event),
+          onMouseMove: event => onHover(event)
         })}
       >
         <animated.div
           ref={innerRef}
           className="inner" 
-          style={{ transform: hoverSpring.transform.to(toMotionValue) }}
+          style={{ transform: hoverSpring.transform.to(toCardMotion) }}
         >
           <div className="front-face">
             <header>
@@ -126,6 +127,7 @@ export default function Card({
           </div>
         </animated.div>
       </animated.div>
+
       <div className="dim" onClick={inactiveCard}></div>
     </>
   ))

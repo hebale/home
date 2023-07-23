@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import useCommits from '@/hooks/useCommits';
+import useCommit from '@/hooks/useCommit';
 
 import List from './List';
 import Detail from './Detail';
@@ -9,7 +9,7 @@ import Toolbar from '@/modules/Toolbar';
 import RadioGroup from '@/modules/RadioGroup';
 
 export default function CommitHistory({ repositories }){
-  const { resetCommitList, resetCommitDetail } = useCommits();
+  const { resetCommitList, resetCommitDetail } = useCommit();
   
   const [loading, setLoading] = useState({ list: false, detail: false });
   const [repoName, setRepoName] = useState(null);

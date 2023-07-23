@@ -2,13 +2,13 @@ import React, { useRef, useState, useEffect } from 'react';
 import { animated, useSprings } from '@react-spring/web';
 
 import useStore from '@/store';
-import useCommits from '@/hooks/useCommits';
+import useCommit from '@/hooks/useCommit';
 
 import Commit from '@/modules/Commit';
 
 export default function List({ loading, repoName, onLoadingState }) {
   const { commitList } = useStore();
-  const { updateCommitList, updateCommitDetail } = useCommits();
+  const { updateCommitList, updateCommitDetail } = useCommit();
 
   const scroll = useRef();
   const [lists, setLists] = useState([]);

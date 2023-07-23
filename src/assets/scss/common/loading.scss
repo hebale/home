@@ -12,12 +12,12 @@
     background-color: rgba(255, 255, 255, 0.75);
     // background-image: linear-gradient(-45deg, rgba(17, 17, 17, 0) 7px, #bbb 7px, rgba(17, 17, 17, 0) 8px);
     // background-size: 10px 10px;
-    background-image: linear-gradient(-45deg, rgba(17, 17, 17, 0) 5px, #bbb 5px, rgba(17, 17, 17, 0) 6px);
+    background-image: linear-gradient(-45deg, rgba(17, 17, 17, 0) 5px, #707070 5px, rgba(17, 17, 17, 0) 6px);
     background-size: 8px 8px;
     // background-image: linear-gradient(-45deg, rgba(17, 17, 17, 0) 4px, #bbb 4px, rgba(17, 17, 17, 0) 5px);
     // background-size: 6px 6px;
     background-repeat: repeat;
-    animation: loadingAnimation 3s linear infinite;
+    animation: loadingAnimation 2s linear infinite;
   }
 }
 

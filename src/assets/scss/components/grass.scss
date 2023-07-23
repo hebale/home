@@ -1,0 +1,116 @@
+.grass-graph {
+  position: relative;
+  background: #fff;
+  box-sizing: border-box;
+  // overflow: hidden;
+  .inner {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+  .grass-canvas {
+    position: relative;
+    height: 225px;
+    width: 100%;
+    min-width: 1090px;
+    &.loading {
+      .axis-x,
+      .axis-y,
+      .legend {
+        display: none;
+      }
+    }
+  }
+
+  .axis-x,
+  .axis-y {
+    position: absolute;
+    span {
+      position: absolute;
+      display: inline-block;
+    }
+  }
+
+  .axis-x {
+    top: 20px;
+    left: 62px;
+    span {
+      font-size: 1.3rem;
+    }
+  }
+  .axis-y {
+    top: 45px;
+    left: 24px;
+    span {
+      width: 100%;
+      font-size: 1.1rem;
+    }
+  }
+
+  .legend {
+    position: absolute;
+    display: flex;
+    gap: 6px;
+    top: 190px;
+    right: 50px;
+    align-items: center;
+    font-weight: 500;
+    &:before {
+      content: 'Less';
+      padding-right: 6px;
+    }
+    &:after {
+      content: 'More';
+      padding-left: 6px;
+    }
+    span {
+      text-indent: 100%;
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: #333;
+      opacity: 0.15;
+      overflow: hidden;
+      &:nth-child(2) { opacity: 0.3; }
+      &:nth-child(3) { opacity: 0.6; }
+      &:nth-child(4) { opacity: 0.8; }
+      &:nth-child(5) { opacity: 1; }
+    }
+  }
+
+  .tooltip {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: -10px;
+    padding: 4px 10px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background: #fff;
+    transform: translate(-50%, calc(-100% - 10px));
+    &:before {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      border: 1px solid #aaa;
+      border-width: 0 0 1px 1px;
+      border-radius: 0 0 0 2px;
+      background: #fff;
+      transform: translate(-50%, calc(50% + 1px)) rotate(-45deg);
+    }
+    span {
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    p {
+      margin-top: 4px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+  }
+}
