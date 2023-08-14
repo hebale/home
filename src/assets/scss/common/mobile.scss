@@ -1,4 +1,14 @@
 #app.mobile {
   display: block;
+  
+  main > .layout > header {
+    padding-left: 72px;
+    padding-right: 72px;
+    flex-direction: column;
+    nav {
+      margin-top: 14px;
+      margin-left: 0;
+    }
+  }
 }
 
