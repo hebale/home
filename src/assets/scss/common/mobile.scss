@@ -1,12 +1,12 @@
-#app.mobile {
+#app {
   display: block;
   
-  main > .layout > header {
-    padding-left: 72px;
-    padding-right: 72px;
+  main.mobile > .layout > header {
+    padding-left: 52px;
+    padding-right: 52px;
     flex-direction: column;
     nav {
-      margin-top: 14px;
+      margin-top: 20px;
       margin-left: 0;
     }
   }
