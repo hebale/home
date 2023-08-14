@@ -9,6 +9,7 @@
   justify-content: center;
   li {
     position: relative;
+    margin-top: 14px;
     &.selected {
       z-index: 10;
       .dim {
