@@ -41,7 +41,7 @@ export default function Main() {
     []
   );
   
-  useChain([textRef, cardRef], [0, 1], 480);
+  useChain([textRef, cardRef], [0, 1], 0);
 
   const onCardSelect = id => setSelectedCard(id);
 
